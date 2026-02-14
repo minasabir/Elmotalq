@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Elmtalq.API/Elmtalq.API.csproj" />
+  <Project Path="Elmtalq.BLL/Elmtalq.BLL.csproj" />
+  <Project Path="Elmtalq.DAL/Elmtalq.DAL.csproj" />
+</Solution>

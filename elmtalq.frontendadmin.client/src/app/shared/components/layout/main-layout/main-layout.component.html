@@ -1,0 +1,17 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Main Content Area -->
+  <div class="transition-all duration-300 ease-in-out"
+       [ngClass]="{ 'ml-64': true, 'ml-16': false }">
+    
+    <!-- Header -->
+    <app-header></app-header>
+
+    <!-- Page Content -->
+    <main class="p-6">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

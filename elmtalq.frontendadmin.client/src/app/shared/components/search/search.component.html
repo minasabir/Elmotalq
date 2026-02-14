@@ -1,0 +1,120 @@
+<div class="space-y-6">
+  <!-- Page Header -->
+  <div>
+    <h1 class="text-3xl font-bold text-gray-900">Global Search</h1>
+    <p class="text-gray-600 mt-1">Search across candidates, companies, and employees</p>
+  </div>
+
+  <!-- Search Form -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="space-y-4">
+      <div class="flex flex-col lg:flex-row gap-4">
+        <!-- Main Search Input -->
+        <div class="flex-1">
+          <div class="relative">
+            <input
+              type="text"
+              formControlName="query"
+              placeholder="Search for candidates, companies, or employees..."
+              class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
+            />
+            <svg class="absolute left-4 top-3.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Search Type Filter -->
+        <div class="lg:w-48">
+          <select formControlName="searchType" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            <option value="all">All Types</option>
+            <option value="candidates">Candidates</option>
+            <option value="companies">Companies</option>
+            <option value="employees">Employees</option>
+          </select>
+        </div>
+
+        <!-- Date Range Filter -->
+        <div class="lg:w-48">
+          <select formControlName="dateRange" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            <option value="all">All Time</option>
+            <option value="today">Today</option>
+            <option value="week">This Week</option>
+            <option value="month">This Month</option>
+            <option value="year">This Year</option>
+          </select>
+        </div>
+
+        <!-- Search Button -->
+        <div class="flex gap-2">
+          <button
+            type="submit"
+            [disabled]="!searchForm.value.query?.trim() || isSearching"
+            class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            <span *ngIf="!isSearching">Search</span>
+            <span *ngIf="isSearching" class="flex items-center">
+              <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Searching...
+            </span>
+          </button>
+          
+          <button
+            type="button"
+            (click)="clearSearch()"
+            class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+          >
+            Clear
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Search History -->
+  <div *ngIf="searchHistory.length > 0" class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-semibold text-gray-900">Recent Searches</h2>
+      <button (click)="clearHistory()" class="text-sm text-gray-500 hover:text-gray-700">
+        Clear History
+      </button>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button
+        *ngFor="let item of searchHistory"
+        (click)="selectHistoryItem(item)"
+        class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-colors"
+      >
+        {{ item }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Search Results -->
+  <div *ngIf="!isSearching && searchResults.length === 0 && searchForm.value.query" class="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+    <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+    </svg>
+    <p class="text-lg font-medium text-gray-900">No results found</p>
+    <p class="text-gray-500 mt-1">Try adjusting your search terms or filters</p>
+  </div>
+
+  <!-- Results List (Placeholder) -->
+  <div *ngIf="searchResults.length > 0" class="space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="text-lg font-semibold text-gray-900">Search Results</h2>
+      <p class="text-sm text-gray-500">{{ searchResults.length }} results found</p>
+    </div>
+    
+    <div class="text-center py-8 text-gray-500">
+      <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+      </svg>
+      <p class="text-lg font-medium">Search results will appear here</p>
+      <p class="text-sm mt-1">Results will be displayed based on your search criteria</p>
+    </div>
+  </div>
+</div>

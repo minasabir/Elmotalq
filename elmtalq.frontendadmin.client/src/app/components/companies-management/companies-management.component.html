@@ -1,0 +1,205 @@
+<div class="p-6">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-900">Companies Management</h2>
+    <div class="flex space-x-3">
+      <button (click)="addNewCompany()" class="bg-primary-600 text-white px-4 py-2 rounded-md hover:bg-primary-700 flex items-center">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        </svg>
+        Add Company
+      </button>
+      <button (click)="exportCompanies()" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 flex items-center">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+        </svg>
+        Export
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="bg-white rounded-lg shadow p-4 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+        <input type="text" [(ngModel)]="searchTerm" placeholder="Search companies..."
+               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Industry</label>
+        <select [(ngModel)]="selectedIndustry"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500">
+          <option *ngFor="let industry of industries" [value]="industry.toLowerCase()">{{ industry }}</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+        <select [(ngModel)]="selectedStatus"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500">
+          <option value="all">All Status</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+      <div class="flex items-end">
+        <div class="text-sm text-gray-600">
+          <span class="font-medium">{{ filteredCompanies.length }}</span> companies found
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Companies Table -->
+  <div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Industry</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Size</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact Person</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Job Postings</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Registered</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let company of filteredCompanies" class="hover:bg-gray-50">
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="flex items-center">
+                <div class="w-10 h-10 rounded-full bg-secondary-100 flex items-center justify-center">
+                  <span class="text-secondary-600 font-semibold">{{ company.name.charAt(0) }}</span>
+                </div>
+                <div class="ml-4">
+                  <div class="text-sm font-medium text-gray-900">{{ company.name }}</div>
+                  <div class="text-sm text-gray-500">{{ company.location }}</div>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{ company.industry }}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{ company.size }}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{ company.contactPerson }}</div>
+              <div class="text-sm text-gray-500">{{ company.contactEmail }}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <div class="text-sm text-gray-900">{{ company.jobPostings }}</div>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              {{ company.registeredDate }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span [class]="'px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ' + 
+                     (company.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800')">
+                {{ company.status }}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <button (click)="viewCompanyDetails(company)" 
+                      class="text-primary-600 hover:text-primary-900 mr-3">
+                View
+              </button>
+              <button (click)="updateCompanyStatus(company.id, company.status === 'active' ? 'inactive' : 'active')"
+                      [class]="company.status === 'active' ? 'text-yellow-600 hover:text-yellow-900 mr-3' : 'text-green-600 hover:text-green-900 mr-3'">
+                {{ company.status === 'active' ? 'Deactivate' : 'Activate' }}
+              </button>
+              <button (click)="deleteCompany(company.id)" 
+                      class="text-red-600 hover:text-red-900">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Company Details Modal -->
+  <div *ngIf="showDetails && selectedCompany" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+    <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-bold text-gray-900">Company Details</h3>
+        <button (click)="closeDetails()" class="text-gray-400 hover:text-gray-600">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Company Information -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h4 class="font-semibold text-gray-900 mb-2">Company Information</h4>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <span class="text-sm text-gray-600">Company Name:</span>
+              <p class="font-medium">{{ selectedCompany.name }}</p>
+            </div>
+            <div>
+              <span class="text-sm text-gray-600">Industry:</span>
+              <p class="font-medium">{{ selectedCompany.industry }}</p>
+            </div>
+            <div>
+              <span class="text-sm text-gray-600">Size:</span>
+              <p class="font-medium">{{ selectedCompany.size }}</p>
+            </div>
+            <div>
+              <span class="text-sm text-gray-600">Location:</span>
+              <p class="font-medium">{{ selectedCompany.location }}</p>
+            </div>
+            <div>
+              <span class="text-sm text-gray-600">Website:</span>
+              <p class="font-medium">
+                <a [href]="selectedCompany.website" target="_blank" class="text-primary-600 hover:underline">
+                  {{ selectedCompany.website }}
+                </a>
+              </p>
+            </div>
+            <div>
+              <span class="text-sm text-gray-600">Job Postings:</span>
+              <p class="font-medium">{{ selectedCompany.jobPostings }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <h4 class="font-semibold text-gray-900 mb-2">Contact Information</h4>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <span class="text-sm text-gray-600">Contact Person:</span>
+              <p class="font-medium">{{ selectedCompany.contactPerson }}</p>
+            </div>
+            <div>
+              <span class="text-sm text-gray-600">Email:</span>
+              <p class="font-medium">{{ selectedCompany.contactEmail }}</p>
+            </div>
+            <div>
+              <span class="text-sm text-gray-600">Phone:</span>
+              <p class="font-medium">{{ selectedCompany.contactPhone }}</p>
+            </div>
+            <div>
+              <span class="text-sm text-gray-600">Registered Date:</span>
+              <p class="font-medium">{{ selectedCompany.registeredDate }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex justify-end space-x-3">
+          <button (click)="closeDetails()" 
+                  class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

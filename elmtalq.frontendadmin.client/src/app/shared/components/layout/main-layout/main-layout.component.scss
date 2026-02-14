@@ -1,0 +1,12 @@
+main {
+  min-height: calc(100vh - 64px);
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  main {
+    padding: 1rem;
+  }
+}
