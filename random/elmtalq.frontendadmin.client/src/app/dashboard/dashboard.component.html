@@ -1,0 +1,200 @@
+<div class="space-y-12 animate-fade-up">
+  <!-- Page Header -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+    <div>
+      <h1 class="text-5xl font-black text-primary-blue tracking-tight">لوحة التحكم</h1>
+      <p class="text-gray-400 font-bold text-lg mt-2 uppercase tracking-widest">مرحباً بك مجدداً! إليك ملخص لنظام
+        التوظيف الخاص بك</p>
+    </div>
+    <div class="px-6 py-3 bg-white rounded-2xl shadow-sm border border-gray-50 flex items-center gap-3">
+      <div class="w-2 h-2 rounded-full bg-success-500 animate-pulse"></div>
+      <span class="text-xs font-black text-primary-blue uppercase tracking-widest">النظام متصل</span>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="flex flex-col items-center justify-center py-24">
+    <div
+      class="w-16 h-16 bg-primary-blue/5 rounded-3xl flex items-center justify-center border border-primary-blue/10 mb-6">
+      <svg class="animate-spin h-8 w-8 text-primary-blue" xmlns="http://www.w3.org/2000/svg" fill="none"
+        viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+        </path>
+      </svg>
+    </div>
+    <span class="text-gray-400 font-bold text-sm uppercase tracking-widest">جاري تحميل البيانات...</span>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div *ngIf="!isLoading" class="space-y-12">
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Total Candidates -->
+      <div
+        class="bg-white rounded-[2.5rem] card-shadow border border-gray-50 p-8 transform hover:-translate-y-2 transition-all duration-500 group">
+        <div class="flex items-center justify-between mb-6">
+          <div
+            class="p-4 bg-primary-blue/5 rounded-2xl group-hover:bg-primary-blue group-hover:text-white transition-colors duration-500">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+              </path>
+            </svg>
+          </div>
+          <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">إجمالي المرشحين</p>
+        </div>
+        <div>
+          <p class="text-4xl font-black text-primary-blue italic">{{ stats.totalCandidates }}</p>
+          <div class="w-full h-1.5 bg-gray-50 rounded-full mt-4 overflow-hidden">
+            <div class="h-full bg-primary-blue rounded-full" style="width: 85%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unassigned Candidates -->
+      <div
+        class="bg-white rounded-[2.5rem] card-shadow border border-gray-50 p-8 transform hover:-translate-y-2 transition-all duration-500 group">
+        <div class="flex items-center justify-between mb-6">
+          <div
+            class="p-4 bg-accent-gold/5 rounded-2xl group-hover:bg-accent-gold group-hover:text-white transition-colors duration-500">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+              </path>
+            </svg>
+          </div>
+          <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">بانتظار التعيين</p>
+        </div>
+        <div>
+          <p class="text-4xl font-black text-accent-gold italic">{{ stats.unassignedCandidates }}</p>
+          <p class="text-[10px] font-black text-gray-400 mt-4 uppercase">{{ getPercentage(stats.unassignedCandidates,
+            stats.totalCandidates) }}% من الإجمالي</p>
+        </div>
+      </div>
+
+      <!-- Total Companies -->
+      <div
+        class="bg-white rounded-[2.5rem] card-shadow border border-gray-50 p-8 transform hover:-translate-y-2 transition-all duration-500 group">
+        <div class="flex items-center justify-between mb-6">
+          <div
+            class="p-4 bg-success-500/5 rounded-2xl group-hover:bg-success-500 group-hover:text-white transition-colors duration-500">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+              </path>
+            </svg>
+          </div>
+          <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">الشركات الشريكة</p>
+        </div>
+        <div>
+          <p class="text-4xl font-black text-success-700 italic">{{ stats.totalCompanies }}</p>
+          <div class="w-full h-1.5 bg-gray-50 rounded-full mt-4 overflow-hidden">
+            <div class="h-full bg-success-500 rounded-full" style="width: 60%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Total Employees -->
+      <div
+        class="bg-white rounded-[2.5rem] card-shadow border border-gray-50 p-8 transform hover:-translate-y-2 transition-all duration-500 group">
+        <div class="flex items-center justify-between mb-6">
+          <div
+            class="p-4 bg-primary-blue-light/5 rounded-2xl group-hover:bg-primary-blue-light group-hover:text-white transition-colors duration-500">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+              </path>
+            </svg>
+          </div>
+          <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">فريق العمل</p>
+        </div>
+        <div>
+          <p class="text-4xl font-black text-primary-blue-light italic">{{ stats.totalEmployees }}</p>
+          <p class="text-[10px] font-black text-gray-400 mt-4 uppercase">موظف نشط</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-white rounded-[2.5rem] card-shadow border border-gray-50 p-10">
+      <h2 class="text-xl font-black text-primary-blue mb-8 text-right" dir="rtl">الإجراءات السريعة</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" dir="rtl">
+        <button routerLink="/candidates"
+          class="p-6 bg-gray-50/50 border border-gray-100 rounded-3xl hover:bg-primary-blue hover:text-white transition-all duration-500 group text-right">
+          <div class="flex items-center gap-5">
+            <div
+              class="p-4 bg-white rounded-2xl shadow-sm text-primary-blue group-hover:bg-white group-hover:scale-110 transition-all duration-500">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="text-lg font-black tracking-tight">إضافة مرشح جديد</p>
+              <p
+                class="text-[10px] font-bold text-gray-400 group-hover:text-primary-blue-light uppercase tracking-widest mt-1">
+                تسجيل بيانات متقدم للوظيفة</p>
+            </div>
+          </div>
+        </button>
+
+        <button routerLink="/companies"
+          class="p-6 bg-gray-50/50 border border-gray-100 rounded-3xl hover:bg-success-600 hover:text-white transition-all duration-500 group text-right">
+          <div class="flex items-center gap-5">
+            <div
+              class="p-4 bg-white rounded-2xl shadow-sm text-success-600 group-hover:bg-white group-hover:scale-110 transition-all duration-500">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                </path>
+              </svg>
+            </div>
+            <div>
+              <p class="text-lg font-black tracking-tight">إضافة شركة جديدة</p>
+              <p
+                class="text-[10px] font-bold text-gray-400 group-hover:text-success-100 uppercase tracking-widest mt-1">
+                تسجيل طلب شراكة جديد</p>
+            </div>
+          </div>
+        </button>
+
+        <button routerLink="/employees"
+          class="p-6 bg-gray-50/50 border border-gray-100 rounded-3xl hover:bg-primary-blue-light hover:text-white transition-all duration-500 group text-right">
+          <div class="flex items-center gap-5">
+            <div
+              class="p-4 bg-white rounded-2xl shadow-sm text-primary-blue-light group-hover:bg-white group-hover:scale-110 transition-all duration-500">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                  d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                </path>
+              </svg>
+            </div>
+            <div>
+              <p class="text-lg font-black tracking-tight">إضافة موظف جديد</p>
+              <p class="text-[10px] font-bold text-gray-400 group-hover:text-blue-50 uppercase tracking-widest mt-1">
+                إنشاء حساب جديد لفريق العمل</p>
+            </div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Recent Activity Placeholder -->
+    <div class="bg-gray-50 rounded-[2.5rem] border border-gray-100 p-12 text-center">
+      <div class="max-w-md mx-auto">
+        <div
+          class="w-20 h-20 bg-white rounded-3xl shadow-sm border border-gray-100 flex items-center justify-center mx-auto mb-6">
+          <svg class="h-10 w-10 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-black text-primary-blue">لا توجد أنشطة حديثة</h3>
+        <p class="text-gray-400 font-bold text-sm mt-3 uppercase tracking-widest">ستظهر الأنشطة هنا بمجرد التفاعل مع
+          النظام</p>
+      </div>
+    </div>
+  </div>
+</div>

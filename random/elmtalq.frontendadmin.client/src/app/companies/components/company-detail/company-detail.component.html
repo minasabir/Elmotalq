@@ -1,0 +1,138 @@
+<div class="p-8 lg:p-12 animate-fade-up">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+        <div class="flex items-center gap-6">
+            <button routerLink="/companies"
+                class="w-12 h-12 flex items-center justify-center bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-lg hover:bg-primary-blue hover:text-white transition-all transform hover:-translate-x-1 group">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                        d="M15 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </button>
+            <div>
+                <h1 class="text-4xl font-black text-primary-blue tracking-tight">Partnership Request</h1>
+                <p class="text-gray-400 font-bold text-sm mt-1 uppercase tracking-widest">B2B client inquiry and
+                    fulfillment details</p>
+            </div>
+        </div>
+
+        <div class="flex gap-4">
+            <button [routerLink]="['/companies', company?.id, 'edit']"
+                class="bg-primary-blue text-white px-8 py-4 rounded-2xl font-black text-sm hover:bg-primary-blue-light transition-all transform hover:-translate-y-1 shadow-lg shadow-primary-blue/20 flex items-center gap-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                    </path>
+                </svg>
+                تعديل البيانات
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="isLoading" class="flex flex-col items-center justify-center py-32">
+        <div
+            class="w-16 h-16 bg-primary-blue/5 rounded-3xl flex items-center justify-center border border-primary-blue/10 mb-6">
+            <svg class="animate-spin h-8 w-8 text-primary-blue" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                </path>
+            </svg>
+        </div>
+        <p class="text-gray-400 font-bold text-sm uppercase tracking-widest">جاري جلب بيانات الشركة...</p>
+    </div>
+
+    <div *ngIf="error"
+        class="bg-red-50 border border-red-100 text-accent-red px-8 py-6 rounded-3xl mb-12 font-bold shadow-sm flex items-center gap-3">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd" />
+        </svg>
+        {{ error }}
+    </div>
+
+    <div *ngIf="!isLoading && company" class="space-y-12">
+        <!-- Main Info Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div class="bg-white rounded-[2.5rem] card-shadow border border-gray-50 p-10">
+                <h2 class="text-2xl font-black text-primary-blue mb-8 border-b border-gray-50 pb-6 text-right"
+                    dir="rtl">نظرة عامة</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-12 text-right" dir="rtl">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest">اسم
+                            الشركة</label>
+                        <p class="text-primary-blue font-black text-xl italic">{{ company.companyName }}</p>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest">القطاع /
+                            النشاط</label>
+                        <p class="text-gray-700 font-bold text-lg">{{ company.companyIndustry }}</p>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest">تاريخ
+                            الطلب</label>
+                        <p class="text-gray-400 font-bold text-lg">{{ company.createdAt | date:'medium' }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-[2.5rem] card-shadow border border-gray-50 p-10">
+                <h2 class="text-2xl font-black text-primary-blue mb-8 border-b border-gray-50 pb-6 text-right"
+                    dir="rtl">معلومات التواصل</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-y-10 gap-x-12 text-right" dir="rtl">
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest">رقم
+                            التواصل</label>
+                        <p class="text-primary-blue font-black text-xl font-mono">{{ company.contactPhone }}</p>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest">البريد
+                            الإلكتروني</label>
+                        <p class="text-gray-700 font-bold text-lg truncate">{{ company.email }}</p>
+                    </div>
+                    <div class="space-y-1">
+                        <label
+                            class="block text-[10px] font-black text-gray-400 uppercase tracking-widest">الموقع</label>
+                        <p class="text-gray-700 font-bold text-lg">{{ company.country }}, {{ company.city }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Job Requirements -->
+        <div class="bg-white rounded-[2.5rem] card-shadow border border-gray-50 p-10">
+            <h2 class="text-2xl font-black text-primary-blue mb-8 border-b border-gray-50 pb-6 text-right" dir="rtl">
+                الاحتياجات الوظيفية</h2>
+            <div class="text-right" dir="rtl">
+                <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3">المسمى الوظيفي
+                    المطلوب</label>
+                <p class="text-primary-blue font-black text-3xl tracking-tight italic">{{ company.requiredJobTitle }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Assignment -->
+        <div class="bg-gray-50 rounded-[2.5rem] border border-gray-100 p-10">
+            <h2 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-6 text-right" dir="rtl">الموظف
+                المكلف بالمتابعة</h2>
+            <div class="flex items-center gap-6 text-right" dir="rtl">
+                <div
+                    class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-primary-blue shadow-sm border border-white">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-xl font-black text-primary-blue mb-1">{{ company.assignedEmployeeName || 'لم يتم
+                        التكليف' }}</p>
+                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">{{
+                        company.assignedEmployeeId ? 'رقم هوية الموظف: ' + company.assignedEmployeeId : 'هذا الطلب لم
+                        يتم تعيينه لأي موظف بعد' }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

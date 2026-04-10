@@ -1,0 +1,133 @@
+<div class="p-8 lg:p-12 animate-fade-up max-w-5xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center gap-6 mb-12">
+        <button [routerLink]="['/companies', companyId]"
+            class="w-12 h-12 flex items-center justify-center bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-lg hover:bg-primary-blue hover:text-white transition-all transform hover:-translate-x-1 group">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7m0 0l7-7m-7 7h18">
+                </path>
+            </svg>
+        </button>
+        <div>
+            <h1 class="text-4xl font-black text-primary-blue tracking-tight">Edit Partnership</h1>
+            <p class="text-gray-400 font-bold text-sm mt-1 uppercase tracking-widest">Refine company requirements and
+                contact data</p>
+        </div>
+    </div>
+
+    <div *ngIf="isLoading" class="flex flex-col items-center justify-center py-32">
+        <div
+            class="w-16 h-16 bg-primary-blue/5 rounded-3xl flex items-center justify-center border border-primary-blue/10 mb-6">
+            <svg class="animate-spin h-8 w-8 text-primary-blue" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                </path>
+            </svg>
+        </div>
+        <p class="text-gray-400 font-bold text-sm uppercase tracking-widest">جاري تحميل بيانات الشركة...</p>
+    </div>
+
+    <div *ngIf="error"
+        class="bg-red-50 border border-red-100 text-accent-red px-8 py-6 rounded-3xl mb-12 font-bold shadow-sm flex items-center gap-3">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd" />
+        </svg>
+        {{ error }}
+    </div>
+
+    <div *ngIf="successMessage"
+        class="bg-success-50 border border-success-100 text-success-700 px-8 py-6 rounded-3xl mb-12 font-bold shadow-sm flex items-center gap-3 animate-fade-up">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd" />
+        </svg>
+        {{ successMessage }}
+    </div>
+
+    <form *ngIf="!isLoading" [formGroup]="editForm" (ngSubmit)="onSubmit()" class="space-y-12">
+        <div class="bg-white rounded-[2.5rem] card-shadow border border-gray-50 p-10">
+            <h2 class="text-2xl font-black text-primary-blue mb-8 border-b border-gray-50 pb-6 text-right" dir="rtl">
+                بيانات الشركة</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-right" dir="rtl">
+                <div>
+                    <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3 px-1">اسم
+                        الشركة</label>
+                    <input type="text" formControlName="companyName"
+                        class="w-full bg-gray-50/50 px-6 py-4 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-primary-blue/5 focus:border-primary-blue outline-none transition-all font-bold">
+                </div>
+                <div>
+                    <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3 px-1">القطاع /
+                        النشاط</label>
+                    <input type="text" formControlName="companyIndustry"
+                        class="w-full bg-gray-50/50 px-6 py-4 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-primary-blue/5 focus:border-primary-blue outline-none transition-all font-bold">
+                </div>
+                <div>
+                    <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3 px-1">البريد
+                        الإلكتروني</label>
+                    <input type="email" formControlName="email"
+                        class="w-full bg-gray-50/50 px-6 py-4 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-primary-blue/5 focus:border-primary-blue outline-none transition-all font-bold">
+                </div>
+                <div>
+                    <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3 px-1">رقم
+                        التواصل</label>
+                    <input type="text" formControlName="contactPhone"
+                        class="w-full bg-gray-50/50 px-6 py-4 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-primary-blue/5 focus:border-primary-blue outline-none transition-all font-bold font-mono">
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-[2.5rem] card-shadow border border-gray-50 p-10">
+            <h2 class="text-2xl font-black text-primary-blue mb-8 border-b border-gray-50 pb-6 text-right" dir="rtl">
+                الاحتياجات الوظيفية</h2>
+            <div class="grid grid-cols-1 gap-8 text-right" dir="rtl">
+                <div>
+                    <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3 px-1">المسمى
+                        الوظيفي المطلوب</label>
+                    <input type="text" formControlName="requiredJobTitle"
+                        class="w-full bg-gray-50/50 px-6 py-4 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-primary-blue/5 focus:border-primary-blue outline-none transition-all font-black text-2xl italic">
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-[2.5rem] card-shadow border border-gray-50 p-10">
+            <h2 class="text-2xl font-black text-primary-blue mb-8 border-b border-gray-50 pb-6 text-right" dir="rtl">
+                الموقع الجغرافي</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-right" dir="rtl">
+                <div>
+                    <label
+                        class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3 px-1">الدولة</label>
+                    <input type="text" formControlName="country"
+                        class="w-full bg-gray-50/50 px-6 py-4 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-primary-blue/5 focus:border-primary-blue outline-none transition-all font-bold">
+                </div>
+                <div>
+                    <label
+                        class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-3 px-1">المدينة</label>
+                    <input type="text" formControlName="city"
+                        class="w-full bg-gray-50/50 px-6 py-4 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-primary-blue/5 focus:border-primary-blue outline-none transition-all font-bold">
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-end gap-4" dir="rtl">
+            <button type="button" [routerLink]="['/companies', companyId]"
+                class="px-10 py-4 bg-white border border-gray-100 rounded-2xl font-black text-sm text-gray-400 hover:text-primary-blue hover:bg-gray-50 transition-all shadow-sm">
+                إلغاء
+            </button>
+            <button type="submit" [disabled]="editForm.invalid || isSaving"
+                class="bg-primary-blue text-white px-12 py-4 rounded-2xl font-black text-sm hover:bg-primary-blue-light transition-all transform hover:-translate-y-1 shadow-xl shadow-primary-blue/20 disabled:opacity-30 disabled:translate-y-0 flex items-center gap-3">
+                <svg *ngIf="isSaving" class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                    </path>
+                </svg>
+                {{ isSaving ? 'جاري الحفظ...' : 'حفظ التغييرات' }}
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,34 @@
+:host {
+    display: block;
+}
+
+.text-primary-blue {
+    color: var(--primary-blue);
+}
+
+.border-primary-blue {
+    border-color: var(--primary-blue);
+}
+
+.text-accent-red {
+    color: var(--accent-red);
+}
+
+nav a {
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--primary-blue);
+        transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+        width: 100%;
+    }
+}

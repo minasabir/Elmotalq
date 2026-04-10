@@ -1,0 +1,10 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "",
+"RedirectUrl": "",
+"LaunchCommand": "",
+"WorkingDirectory": "N:\\Elmtalq\\Elmtalq\\Elmtalq.DAL",
+"MaxTimeoutInSeconds": "120",
+"KeepRunning": "false"
+}
+}

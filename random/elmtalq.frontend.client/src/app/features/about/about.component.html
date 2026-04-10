@@ -1,0 +1,113 @@
+<div class="min-h-screen bg-white py-24 px-4 md:px-6 relative overflow-hidden">
+    <!-- Decorative background -->
+    <div class="absolute top-0 left-0 w-[500px] h-[500px] bg-primary-blue/5 rounded-full blur-[120px] -ml-64 -mt-64">
+    </div>
+    <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-accent-red/5 rounded-full blur-[120px] -mr-64 -mb-64">
+    </div>
+
+    <div class="container mx-auto max-w-5xl relative z-10">
+        @if (isLoading) {
+        <div class="flex flex-col items-center justify-center py-32 animate-pulse">
+            <div class="w-16 h-16 border-4 border-primary-blue/20 border-t-primary-blue rounded-full animate-spin">
+            </div>
+            <p class="mt-6 text-primary-blue font-black tracking-widest uppercase text-xs">Loading Intelligence...</p>
+        </div>
+        } @else {
+        <div class="animate-fade-up">
+            <!-- About Hero Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
+                <div class="order-2 lg:order-1">
+                    <div
+                        class="inline-flex items-center gap-2 bg-accent-red/10 border border-accent-red/20 rounded-full px-5 py-2 mb-6">
+                        <span class="text-xs font-black text-accent-red uppercase tracking-widest">Since 2010</span>
+                    </div>
+                    <h1 class="text-5xl md:text-6xl font-black text-primary-blue mb-8 leading-tight">
+                        {{ 'ريادة التوظيف العالمي' }}
+                    </h1>
+                    <div class="w-24 h-2 bg-accent-red rounded-full mb-10"></div>
+                    <div class="prose prose-xl text-gray-500 leading-relaxed font-medium">
+                        <p>{{ aboutData?.companyDescription }}</p>
+                        <p class="text-sm mt-4 text-gray-400">مقرنا: {{ aboutData?.officeLocation }}</p>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <div class="relative">
+                        <div
+                            class="absolute -inset-4 bg-gradient-to-tr from-primary-blue to-accent-red rounded-[60px] opacity-10 blur-2xl">
+                        </div>
+                        <div
+                            class="relative bg-gray-100 rounded-[50px] aspect-[4/5] overflow-hidden shadow-2xl border border-white/50">
+                            <!-- Generate image placeholder -->
+                            <div class="w-full h-full bg-primary-blue/10 flex items-center justify-center">
+                                <svg class="w-24 h-24 text-primary-blue/20" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vision & Mission Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div
+                    class="group bg-white p-12 rounded-[50px] border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
+                    <div
+                        class="absolute top-0 right-0 w-32 h-32 bg-accent-red/5 rounded-bl-[100px] group-hover:scale-125 transition-transform duration-700">
+                    </div>
+                    <div class="w-16 h-16 bg-accent-red/10 rounded-2xl flex items-center justify-center mb-8">
+                        <svg class="w-8 h-8 text-accent-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-3xl font-black text-primary-blue mb-6">رؤيتنا الاستراتيجية</h3>
+                    <p class="text-lg text-gray-500 leading-relaxed">نسعى لأن نكون الشريك الاستراتيجي الأول للربط بين
+                        الكفاءات المصرية وأكبر المؤسسات العالمية، مع الالتزام بأعلى معايير الجودة والشفافية.</p>
+                </div>
+
+                <div
+                    class="group bg-primary-blue p-12 rounded-[50px] shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 relative overflow-hidden">
+                    <div
+                        class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-bl-[100px] group-hover:scale-125 transition-transform duration-700">
+                    </div>
+                    <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-8">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-3xl font-black text-white mb-6">رسالتنا المهنية</h3>
+                    <p class="text-lg text-white/70 leading-relaxed">توفير حلول توظيف متكاملة وموثوقة تدعم نمو شركائنا
+                        وتساهم في تطوير المسار المهني للكوادر المصرية المميزة.</p>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div
+                class="mt-24 bg-gray-50 rounded-[40px] p-12 grid grid-cols-2 md:grid-cols-4 gap-8 text-center border border-gray-100">
+                <div>
+                    <p class="text-4xl font-black text-primary-blue mb-2">15+</p>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Years Experience</p>
+                </div>
+                <div>
+                    <p class="text-4xl font-black text-primary-blue mb-2">50k+</p>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Placed Candidates</p>
+                </div>
+                <div>
+                    <p class="text-4xl font-black text-primary-blue mb-2">100%</p>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Client Satisfaction</p>
+                </div>
+                <div>
+                    <p class="text-4xl font-black text-primary-blue mb-2">20+</p>
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Global Partners</p>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>

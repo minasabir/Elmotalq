@@ -1,0 +1,214 @@
+<div class="bg-white rounded-3xl card-shadow border border-gray-100 overflow-hidden animate-fade-up">
+  <!-- Header -->
+  <div class="p-8 border-b border-gray-50">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-6 lg:space-y-0">
+      <div>
+        <h1 class="text-3xl font-black text-primary-blue tracking-tight">Companies Management</h1>
+        <p class="text-gray-400 font-bold text-sm mt-1 uppercase tracking-widest">Client directory and partnership
+          requests</p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4">
+        <!-- Search -->
+        <div class="relative group">
+          <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" placeholder="Search companies..."
+            class="w-full sm:w-72 bg-gray-50 border-none rounded-2xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-primary-blue/5 transition-all outline-none italic text-gray-400" />
+          <svg
+            class="absolute left-4 top-3 w-5 h-5 text-gray-300 group-focus-within:text-primary-blue transition-colors"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+
+        <!-- Filter Toggle -->
+        <button (click)="toggleUnassignedFilter()"
+          [ngClass]="showUnassignedOnly ? 'bg-primary-blue text-white shadow-lg shadow-primary-blue/20' : 'bg-gray-50 text-gray-400'"
+          class="px-6 py-3 rounded-2xl font-black text-xs uppercase tracking-widest transition-all hover:scale-105 active:scale-95">
+          {{ showUnassignedOnly ? 'Showing Unassigned' : 'Show Unassigned Only' }}
+        </button>
+
+        <!-- Actions -->
+        <button
+          class="inline-flex items-center justify-center gap-3 bg-primary-blue text-white px-6 py-3 rounded-2xl font-black text-sm hover:bg-primary-blue-light transition-all transform hover:-translate-y-1 shadow-lg shadow-primary-blue/20">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path>
+          </svg>
+          Add Company
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="overflow-x-auto">
+    <table class="w-full text-right" dir="rtl">
+      <thead class="bg-gray-50/50 border-b border-gray-100">
+        <tr>
+          <th class="px-8 py-5 text-right w-12">
+            <input type="checkbox" [checked]="selectedCompanies.length === filteredCompanies.length"
+              (change)="selectAllCompanies()"
+              class="rounded-md border-gray-200 text-primary-blue focus:ring-primary-blue/20 w-5 h-5" />
+          </th>
+          <th class="px-8 py-5 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            الشركة
+          </th>
+          <th class="px-8 py-5 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            مسؤول التواصل
+          </th>
+          <th class="px-8 py-5 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            القطاع
+          </th>
+          <th class="px-8 py-5 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            الاحتياج الوظيفي
+          </th>
+          <th class="px-8 py-5 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            الحالة
+          </th>
+          <th class="px-8 py-5 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            الإجراءات
+          </th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-50">
+        <!-- Loading State -->
+        <tr *ngIf="isLoading">
+          <td colspan="7" class="px-8 py-20 text-center text-right" dir="rtl">
+            <div class="flex flex-col items-center justify-center space-y-4">
+              <div
+                class="w-12 h-12 bg-primary-blue/5 rounded-2xl flex items-center justify-center border border-primary-blue/10">
+                <svg class="animate-spin h-6 w-6 text-primary-blue" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                  </path>
+                </svg>
+              </div>
+              <span class="text-gray-400 font-bold text-sm tracking-widest uppercase">جاري تحميل الشركات...</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Empty State -->
+        <tr *ngIf="!isLoading && filteredCompanies.length === 0">
+          <td colspan="7" class="px-8 py-24 text-center">
+            <div class="flex flex-col items-center">
+              <div
+                class="w-20 h-20 bg-gray-50 rounded-3xl flex items-center justify-center mb-6 border border-gray-100">
+                <svg class="h-10 w-10 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                  </path>
+                </svg>
+              </div>
+              <p class="text-xl font-black text-primary-blue mb-2">لا يوجد شركات</p>
+              <p class="text-gray-400 font-bold text-sm uppercase tracking-widest">ابدأ بتوسيع شبكة شركائك عن طريق إضافة
+                شركة جديدة</p>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Company Rows -->
+        <tr *ngFor="let company of filteredCompanies" class="hover:bg-gray-50/50 transition-all group">
+          <td class="px-8 py-5">
+            <input type="checkbox" [checked]="selectedCompanies.includes(company.id)"
+              (change)="toggleCompanySelection(company.id)"
+              class="rounded-md border-gray-200 text-primary-blue focus:ring-primary-blue/20 w-5 h-5" />
+          </td>
+          <td class="px-8 py-5">
+            <div class="flex items-center gap-4 text-right" dir="rtl">
+              <div
+                class="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100 group-hover:bg-primary-blue group-hover:border-primary-blue shadow-sm group-hover:shadow-lg group-hover:shadow-primary-blue/20 transition-all duration-500">
+                <span class="text-primary-blue group-hover:text-white font-black text-lg">{{
+                  company.companyName.charAt(0) }}</span>
+              </div>
+              <div>
+                <div class="text-sm font-black text-primary-blue group-hover:text-primary-blue-dark transition-colors">
+                  {{ company.companyName }}</div>
+                <div class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">{{ company.email }}
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="px-8 py-5">
+            <div class="text-sm font-bold text-gray-700">{{ company.contactPhone }}</div>
+            <div class="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-0.5">الرقم المباشر</div>
+          </td>
+          <td class="px-8 py-5">
+            <div class="text-sm font-black text-primary-blue">{{ company.companyIndustry }}</div>
+            <div class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">نوع الصناعة</div>
+          </td>
+          <td class="px-8 py-5">
+            <div class="text-sm font-bold text-gray-700">{{ company.requiredJobTitle }}</div>
+            <div class="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-0.5">الوظيفة المطلوبة</div>
+          </td>
+          <td class="px-8 py-5">
+            <span [ngClass]="company.assignedEmployeeId 
+              ? 'bg-success-50 text-success-700 ring-success-100' 
+              : 'bg-warning-50 text-warning-700 ring-warning-100'"
+              class="px-4 py-1.5 inline-flex text-[10px] font-black rounded-xl uppercase tracking-widest ring-1 ring-inset shadow-sm transition-all group-hover:scale-105">
+              {{ company.assignedEmployeeId ? 'تم التكليف' : 'بانتظار التكليف' }}
+            </span>
+          </td>
+          <td class="px-8 py-5">
+            <div class="flex items-center gap-3">
+              <button [routerLink]="['/companies', company.id]"
+                class="p-2 bg-gray-50 text-primary-blue hover:bg-primary-blue hover:text-white rounded-xl transition-all shadow-sm hover:shadow-lg hover:shadow-primary-blue/20">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                  </path>
+                </svg>
+              </button>
+              <button
+                class="p-2 bg-gray-50 text-success-600 hover:bg-success-600 hover:text-white rounded-xl transition-all shadow-sm hover:shadow-lg hover:shadow-success-600/20">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                  </path>
+                </svg>
+              </button>
+              <button (click)="deleteCompany(company.id)"
+                class="p-2 bg-gray-50 text-accent-red hover:bg-accent-red hover:text-white rounded-xl transition-all shadow-sm hover:shadow-lg hover:shadow-accent-red/20">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                  </path>
+                </svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="px-8 py-6 bg-gray-50/50 border-t border-gray-100 flex items-center justify-between"
+    *ngIf="totalItems > 0 && !showUnassignedOnly">
+    <div class="text-xs font-black text-gray-400 uppercase tracking-widest">
+      Showing <span class="text-primary-blue">{{ (currentPage - 1) * pageSize + 1 }}</span> -
+      <span class="text-primary-blue">{{ currentPage * pageSize > totalItems ? totalItems : currentPage * pageSize
+        }}</span>
+      of <span class="text-primary-blue">{{ totalItems }}</span> companies
+    </div>
+    <div class="flex gap-3">
+      <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1"
+        class="px-5 py-2.5 bg-white border border-gray-100 rounded-xl text-xs font-black text-gray-400 uppercase tracking-widest hover:bg-primary-blue hover:text-white hover:border-primary-blue shadow-sm transition-all disabled:opacity-30 disabled:pointer-events-none disabled:bg-gray-50">
+        Previous
+      </button>
+
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-bold text-gray-400">Page {{ currentPage }} of {{ totalPages }}</span>
+      </div>
+
+      <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages"
+        class="px-5 py-2.5 bg-white border border-gray-100 rounded-xl text-xs font-black text-primary-blue uppercase tracking-widest hover:bg-primary-blue hover:text-white hover:border-primary-blue shadow-sm transition-all disabled:opacity-30 disabled:pointer-events-none disabled:bg-gray-50">
+        Next
+      </button>
+    </div>
+  </div>
+</div>

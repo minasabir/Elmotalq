@@ -1,0 +1,144 @@
+<div class="p-8 lg:p-12 animate-fade-up">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+        <div class="flex items-center gap-6">
+            <button routerLink="/employees"
+                class="w-12 h-12 flex items-center justify-center bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-lg hover:bg-primary-blue hover:text-white transition-all transform hover:-translate-x-1 group">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                        d="M15 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </button>
+            <div>
+                <h1 class="text-4xl font-black text-primary-blue tracking-tight">Employee Profile</h1>
+                <p class="text-gray-400 font-bold text-sm mt-1 uppercase tracking-widest">In-depth team member
+                    information</p>
+            </div>
+        </div>
+
+        <div class="flex gap-4">
+            <button [routerLink]="['/employees', employee?.id, 'edit']"
+                class="bg-primary-blue text-white px-8 py-4 rounded-2xl font-black text-sm hover:bg-primary-blue-light transition-all transform hover:-translate-y-1 shadow-lg shadow-primary-blue/20 flex items-center gap-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
+                    </path>
+                </svg>
+                تعديل البيانات
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="isLoading" class="flex flex-col items-center justify-center py-32">
+        <div
+            class="w-16 h-16 bg-primary-blue/5 rounded-3xl flex items-center justify-center border border-primary-blue/10 mb-6">
+            <svg class="animate-spin h-8 w-8 text-primary-blue" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                </path>
+            </svg>
+        </div>
+        <p class="text-gray-400 font-bold text-sm uppercase tracking-widest">جاري جلب بيانات الموظف...</p>
+    </div>
+
+    <div *ngIf="error"
+        class="bg-red-50 border border-red-100 text-accent-red px-8 py-6 rounded-3xl mb-12 font-bold shadow-sm flex items-center gap-3">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                clip-rule="evenodd" />
+        </svg>
+        {{ error }}
+    </div>
+
+    <div *ngIf="!isLoading && employee" class="max-w-5xl mx-auto space-y-12">
+        <!-- Profile Card -->
+        <div class="bg-white rounded-[2.5rem] card-shadow border border-gray-50 overflow-hidden">
+            <div class="px-10 py-12 md:flex items-center gap-10 border-b border-gray-50">
+                <div class="relative group mx-auto md:mx-0">
+                    <div
+                        class="w-40 h-40 bg-gray-50 rounded-[2.5rem] flex items-center justify-center text-primary-blue text-5xl font-black border-2 border-dashed border-gray-200 group-hover:bg-primary-blue group-hover:text-white group-hover:border-primary-blue transition-all duration-500 shadow-inner">
+                        {{ employee.name.charAt(0).toUpperCase() }}
+                    </div>
+                </div>
+
+                <div class="flex-1 text-center md:text-right" dir="rtl">
+                    <div class="flex flex-col md:flex-row items-center gap-4 mb-3">
+                        <h2 class="text-4xl font-black text-primary-blue">{{ employee.name }}</h2>
+                        <span [ngClass]="getRoleBadgeColor(employee.role)"
+                            class="px-5 py-1.5 text-xs font-black rounded-xl uppercase tracking-widest ring-1 ring-inset shadow-sm">
+                            {{ employee.role }}
+                        </span>
+                    </div>
+                    <p class="text-gray-400 font-bold text-lg mb-6">{{ employee.email }}</p>
+                    <div class="flex items-center justify-center md:justify-start gap-4">
+                        <span
+                            [ngClass]="employee.isActive ? 'bg-success-50 text-success-700 ring-success-100' : 'bg-red-50 text-accent-red ring-red-100'"
+                            class="px-4 py-1.5 text-[10px] font-black rounded-xl ring-1 ring-inset uppercase tracking-widest shadow-sm">
+                            {{ employee.isActive ? 'Status: Active' : 'Status: Restricted' }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 text-right" dir="rtl">
+                <div class="space-y-1">
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest">رقم
+                        الهاتف</label>
+                    <p class="text-primary-blue font-black text-xl font-mono">{{ employee.phoneNumber }}</p>
+                </div>
+                <div class="space-y-1">
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest">المعرف
+                        الوظيفي</label>
+                    <p class="text-gray-600 font-bold text-lg">{{ employee.id }}</p>
+                </div>
+                <div class="space-y-1">
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest">تاريخ
+                        الانضمام</label>
+                    <p class="text-gray-600 font-bold text-lg">{{ employee.createdAt | date:'longDate' }}</p>
+                </div>
+                <div class="space-y-1">
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest">الراتب
+                        الشهري</label>
+                    <p class="text-primary-blue font-black text-2xl">{{ employee.salary | currency:'SAR
+                        ':'symbol':'1.0-2' }}</p>
+                </div>
+                <div class="space-y-1">
+                    <label class="block text-[10px] font-black text-gray-400 uppercase tracking-widest">آخر
+                        تحديث</label>
+                    <p class="text-gray-400 font-bold text-lg">{{ employee.updatedAt | date:'short' }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div
+                class="bg-white p-8 rounded-3xl card-shadow border border-gray-50 text-center hover:bg-gray-50/50 transition-all group">
+                <p class="text-gray-400 text-[10px] font-black uppercase tracking-widest mb-3">المرشحين المعينين</p>
+                <p class="text-4xl font-black text-primary-blue group-hover:scale-110 transition-transform">0</p>
+                <div
+                    class="mt-4 w-10 h-1 bg-gray-100 mx-auto rounded-full group-hover:bg-primary-blue transition-colors">
+                </div>
+            </div>
+            <div
+                class="bg-white p-8 rounded-3xl card-shadow border border-gray-50 text-center hover:bg-gray-50/50 transition-all group">
+                <p class="text-gray-400 text-[10px] font-black uppercase tracking-widest mb-3">الشركات المعينين</p>
+                <p class="text-4xl font-black text-primary-blue group-hover:scale-110 transition-transform">0</p>
+                <div
+                    class="mt-4 w-10 h-1 bg-gray-100 mx-auto rounded-full group-hover:bg-primary-blue transition-colors">
+                </div>
+            </div>
+            <div
+                class="bg-white p-8 rounded-3xl card-shadow border border-gray-50 text-center hover:bg-gray-50/50 transition-all group">
+                <p class="text-gray-400 text-[10px] font-black uppercase tracking-widest mb-3">المهام المكتملة</p>
+                <p class="text-4xl font-black text-primary-blue group-hover:scale-110 transition-transform">0</p>
+                <div
+                    class="mt-4 w-10 h-1 bg-gray-100 mx-auto rounded-full group-hover:bg-primary-blue transition-colors">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
