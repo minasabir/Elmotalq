@@ -1,47 +1,58 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 import { motion } from 'motion/react';
-import { Plus, Edit, Shield, ShieldCheck } from 'lucide-react';
+import { Plus, Edit, Shield, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
+import { api, Employee, UserRole, getRoleDisplay } from '../../../services/api';
 
 export default function EmployeesList() {
-  // Mock data
-  const employees = [
-    {
-      id: 1,
-      name: 'John Smith',
-      email: 'john@elmotalq.com',
-      role: 'Owner',
-      salary: 10000,
-      isActive: true,
-      createdAt: '2024-01-01T10:00:00Z',
-    },
-    {
-      id: 2,
-      name: 'Jane Doe',
-      email: 'jane@elmotalq.com',
-      role: 'Secretary',
-      salary: 5000,
-      isActive: true,
-      createdAt: '2024-01-10T10:00:00Z',
-    },
-    {
-      id: 3,
-      name: 'Bob Johnson',
-      email: 'bob@elmotalq.com',
-      role: 'Secretary',
-      salary: 4500,
-      isActive: true,
-      createdAt: '2024-01-15T10:00:00Z',
-    },
-    {
-      id: 4,
-      name: 'Alice Williams',
-      email: 'alice@elmotalq.com',
-      role: 'Secretary',
-      salary: 4800,
-      isActive: false,
-      createdAt: '2024-01-20T10:00:00Z',
-    },
-  ];
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [employees, setEmployees] = useState<Employee[]>([]);
+
+  useEffect(() => {
+    loadEmployees();
+  }, []);
+
+  const loadEmployees = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await api.getAllEmployees();
+      if (response.success && response.data) {
+        setEmployees(response.data);
+      }
+    } catch (err) {
+      setError('Failed to load employees');
+      console.error('Error loading employees:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-6 text-center">
+          <AlertCircle className="w-12 h-12 text-destructive mx-auto mb-4" />
+          <p className="text-destructive mb-4">{error}</p>
+          <button
+            onClick={loadEmployees}
+            className="px-4 py-2 bg-destructive text-destructive-foreground rounded-lg hover:bg-destructive/90 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -120,15 +131,15 @@ export default function EmployeesList() {
                   <td className="px-6 py-4 text-sm text-muted-foreground">{employee.email}</td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
-                      {employee.role === 'Owner' ? (
+                      {employee.role === UserRole.Owner ? (
                         <>
                           <ShieldCheck className="w-4 h-4 text-primary" />
-                          <span className="text-sm font-medium text-primary">Owner</span>
+                          <span className="text-sm font-medium text-primary">{getRoleDisplay(employee.role)}</span>
                         </>
                       ) : (
                         <>
                           <Shield className="w-4 h-4 text-muted-foreground" />
-                          <span className="text-sm">Secretary</span>
+                          <span className="text-sm">{getRoleDisplay(employee.role)}</span>
                         </>
                       )}
                     </div>

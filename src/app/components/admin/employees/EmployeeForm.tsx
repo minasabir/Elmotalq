@@ -1,29 +1,97 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router';
-import { ArrowLeft, Save } from 'lucide-react';
+import { ArrowLeft, Save, Loader2 } from 'lucide-react';
+import { api, Employee, UserRole, CreateEmployeeRequest } from '../../../services/api';
 
 export default function EmployeeForm() {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEdit = Boolean(id);
+  const [loading, setLoading] = useState(isEdit);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
-    name: isEdit ? 'Jane Doe' : '',
-    email: isEdit ? 'jane@elmotalq.com' : '',
+    name: '',
+    email: '',
     password: '',
-    role: isEdit ? '1' : '',
-    salary: isEdit ? '5000' : '',
-    isActive: isEdit ? true : true,
+    role: '',
+    salary: '',
+    isActive: true,
   });
+
+  useEffect(() => {
+    if (isEdit && id) {
+      loadEmployee(Number(id));
+    }
+  }, [isEdit, id]);
+
+  const loadEmployee = async (employeeId: number) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await api.getAllEmployees();
+      if (response.success && response.data) {
+        const employee = response.data.find(e => e.id === employeeId);
+        if (employee) {
+          setFormData({
+            name: employee.name,
+            email: employee.email,
+            password: '',
+            role: employee.role.toString(),
+            salary: employee.salary.toString(),
+            isActive: employee.isActive,
+          });
+        }
+      }
+    } catch (err) {
+      setError('Failed to load employee data');
+      console.error('Error loading employee:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const updateField = (field: string, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    navigate('/admin/employees');
+    setSubmitting(true);
+    setError(null);
+
+    try {
+      const data: CreateEmployeeRequest = {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        role: Number(formData.role) as UserRole,
+        salary: Number(formData.salary),
+      };
+
+      if (isEdit && id) {
+        await api.updateEmployee(Number(id), data);
+      } else {
+        await api.createEmployee(data);
+      }
+
+      navigate('/admin/employees');
+    } catch (err) {
+      setError(isEdit ? 'Failed to update employee' : 'Failed to create employee');
+      console.error('Error saving employee:', err);
+    } finally {
+      setSubmitting(false);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -151,6 +219,13 @@ export default function EmployeeForm() {
             </div>
           </div>
 
+          {/* Error */}
+          {error && (
+            <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4 text-sm text-destructive">
+              {error}
+            </div>
+          )}
+
           {/* Info Box */}
           <div className="bg-secondary/50 rounded-lg p-4 text-sm">
             <p className="text-muted-foreground">
@@ -164,10 +239,15 @@ export default function EmployeeForm() {
           <div className="pt-6 border-t border-border flex items-center gap-4">
             <button
               type="submit"
-              className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2"
+              disabled={submitting}
+              className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Save className="w-4 h-4" />
-              {isEdit ? 'Update Employee' : 'Create Employee'}
+              {submitting ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Save className="w-4 h-4" />
+              )}
+              {submitting ? 'Saving...' : (isEdit ? 'Update Employee' : 'Create Employee')}
             </button>
             <Link
               to="/admin/employees"
