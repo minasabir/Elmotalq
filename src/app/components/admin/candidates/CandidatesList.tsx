@@ -66,14 +66,14 @@ export default function CandidatesList() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-        <div>
-          <h2 className={`text-2xl font-bold ${isRTL ? 'text-right' : 'text-left'}`}>{t('candidates')}</h2>
-          <p className={`text-muted-foreground ${isRTL ? 'text-right' : 'text-left'}`}>{t('manageCompanies')}</p>
+      <div className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 ${isRTL ? 'sm:flex-row-reverse' : 'sm:flex-row'}`}>
+        <div className={isRTL ? 'text-right' : 'text-left'}>
+          <h2 className="text-xl sm:text-2xl font-bold">{t('candidates')}</h2>
+          <p className="text-sm sm:text-base text-muted-foreground">{t('manageCompanies')}</p>
         </div>
         <Link
           to="/admin/candidates/new"
-          className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
         >
           <Plus className="w-4 h-4" />
           {t('add')}
@@ -81,8 +81,8 @@ export default function CandidatesList() {
       </div>
 
       {/* Search and Filters */}
-      <div className="bg-card rounded-xl p-6 border border-border space-y-4">
-        <div className="flex gap-4">
+      <div className="bg-card rounded-xl p-4 sm:p-6 border border-border space-y-4">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
@@ -300,13 +300,13 @@ export default function CandidatesList() {
         </div>
 
         {/* Pagination */}
-        <div className={`px-6 py-4 border-t border-border flex items-center justify-between ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
-          <div className="text-sm text-muted-foreground">
+        <div className={`px-4 sm:px-6 py-4 border-t border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 ${isRTL ? 'sm:flex-row-reverse' : 'sm:flex-row'}`}>
+          <div className="text-sm text-muted-foreground text-center sm:text-left">
             {t('showing')} {candidates.length > 0 ? startIndex : 0} {t('to')} {endIndex} {t('of')}{' '}
             {totalCount} {t('results')}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center gap-2 flex-wrap">
             <select
               value={pageSize}
               onChange={(e) => {
