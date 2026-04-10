@@ -1,14 +1,54 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Users, Building2, UserCircle, TrendingUp, ArrowUpRight } from 'lucide-react';
+import { Users, Building2, UserCircle, TrendingUp, ArrowUpRight, Loader2, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { api, Candidate, Company, Employee } from '../../services/api';
 
 export default function AdminDashboard() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [employees, setEmployees] = useState<Employee[]>([]);
+
+  useEffect(() => {
+    loadDashboardData();
+  }, []);
+
+  const loadDashboardData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const [candidatesRes, companiesRes, employeesRes] = await Promise.all([
+        api.getAllCandidates(1, 100),
+        api.getAllCompanies(1, 100),
+        api.getAllEmployees(),
+      ]);
+
+      if (candidatesRes.success && candidatesRes.data) {
+        setCandidates(candidatesRes.data.items);
+      }
+      if (companiesRes.success && companiesRes.data) {
+        setCompanies(companiesRes.data.items);
+      }
+      if (employeesRes.success && employeesRes.data) {
+        setEmployees(employeesRes.data);
+      }
+    } catch (err) {
+      setError('Failed to load dashboard data');
+      console.error('Error loading dashboard:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const stats = [
     {
       label: 'Total Candidates',
-      value: '247',
-      change: '+12%',
+      value: candidates.length.toString(),
+      change: '',
       trend: 'up',
       icon: Users,
       color: 'bg-primary/10 text-primary',
@@ -16,8 +56,8 @@ export default function AdminDashboard() {
     },
     {
       label: 'Total Companies',
-      value: '83',
-      change: '+8%',
+      value: companies.length.toString(),
+      change: '',
       trend: 'up',
       icon: Building2,
       color: 'bg-primary/10 text-primary',
@@ -25,44 +65,61 @@ export default function AdminDashboard() {
     },
     {
       label: 'Active Employees',
-      value: '12',
-      change: '+2',
+      value: employees.filter(e => e.isActive).length.toString(),
+      change: '',
       trend: 'up',
       icon: UserCircle,
       color: 'bg-primary/10 text-primary',
       link: '/admin/employees',
     },
     {
-      label: 'Placements This Month',
-      value: '34',
-      change: '+18%',
+      label: 'Assigned Candidates',
+      value: candidates.filter(c => c.assignedEmployeeId).length.toString(),
+      change: '',
       trend: 'up',
       icon: TrendingUp,
       color: 'bg-primary/10 text-primary',
     },
   ];
 
-  const monthlyData = [
-    { month: 'Jan', candidates: 45, companies: 12 },
-    { month: 'Feb', candidates: 52, companies: 15 },
-    { month: 'Mar', candidates: 61, companies: 18 },
-    { month: 'Apr', candidates: 58, companies: 16 },
-    { month: 'May', candidates: 67, companies: 20 },
-    { month: 'Jun', candidates: 72, companies: 22 },
-  ];
+  const recentCandidates = candidates.slice(0, 5).map(c => ({
+    id: c.id,
+    name: c.fullName,
+    job: c.jobTitle,
+    status: c.assignedEmployeeId ? 'Assigned' : 'Unassigned',
+  }));
 
-  const recentCandidates = [
-    { id: 1, name: 'Ahmed Mohamed', job: 'Software Developer', status: 'Unassigned' },
-    { id: 2, name: 'Sara Ibrahim', job: 'UX Designer', status: 'Assigned' },
-    { id: 3, name: 'Mohamed Ali', job: 'Data Analyst', status: 'Unassigned' },
-    { id: 4, name: 'Nour Hassan', job: 'Marketing Manager', status: 'Assigned' },
-  ];
+  const recentCompanies = companies.slice(0, 5).map(c => ({
+    id: c.id,
+    name: c.companyName,
+    job: c.requiredJobTitle,
+    status: c.assignedEmployeeId ? 'Assigned' : 'Unassigned',
+  }));
 
-  const recentCompanies = [
-    { id: 1, name: 'Tech Solutions Inc', job: 'Senior Developer', status: 'Unassigned' },
-    { id: 2, name: 'Global Innovations', job: 'Product Manager', status: 'Assigned' },
-    { id: 3, name: 'Digital Agency', job: 'UI Designer', status: 'Unassigned' },
-  ];
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-6 text-center">
+          <AlertCircle className="w-12 h-12 text-destructive mx-auto mb-4" />
+          <p className="text-destructive mb-4">{error}</p>
+          <button
+            onClick={loadDashboardData}
+            className="px-4 py-2 bg-destructive text-destructive-foreground rounded-lg hover:bg-destructive/90 transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -98,81 +155,42 @@ export default function AdminDashboard() {
         })}
       </div>
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Monthly Overview */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="bg-card rounded-xl p-6 border border-border"
-        >
-          <h3 className="text-lg font-semibold mb-6">Monthly Overview</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={monthlyData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-              <XAxis dataKey="month" stroke="#6B7280" />
-              <YAxis stroke="#6B7280" />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: '#FFFFFF',
-                  border: '1px solid #E5E7EB',
-                  borderRadius: '8px',
-                }}
-              />
-              <Bar dataKey="candidates" fill="#1E3A8A" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="companies" fill="#60A5FA" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-          <div className="flex justify-center gap-6 mt-4">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-[#1E3A8A] rounded-full" />
-              <span className="text-sm text-muted-foreground">Candidates</span>
+      {/* Quick Actions */}
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="bg-card rounded-xl p-6 border border-border"
+      >
+        <h3 className="text-lg font-semibold mb-6">Quick Actions</h3>
+        <div className="space-y-3">
+          <Link
+            to="/admin/candidates/new"
+            className="block p-4 bg-primary/5 hover:bg-primary/10 rounded-lg border border-primary/20 transition-colors"
+          >
+            <div className="font-medium text-primary">Add New Candidate</div>
+            <div className="text-sm text-muted-foreground mt-1">
+              Register a new candidate profile
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-[#60A5FA] rounded-full" />
-              <span className="text-sm text-muted-foreground">Companies</span>
+          </Link>
+          <Link
+            to="/admin/companies/new"
+            className="block p-4 bg-primary/5 hover:bg-primary/10 rounded-lg border border-primary/20 transition-colors"
+          >
+            <div className="font-medium text-primary">Add New Company</div>
+            <div className="text-sm text-muted-foreground mt-1">
+              Register a new company request
             </div>
-          </div>
-        </motion.div>
-
-        {/* Quick Actions */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="bg-card rounded-xl p-6 border border-border"
-        >
-          <h3 className="text-lg font-semibold mb-6">Quick Actions</h3>
-          <div className="space-y-3">
-            <Link
-              to="/admin/candidates/new"
-              className="block p-4 bg-primary/5 hover:bg-primary/10 rounded-lg border border-primary/20 transition-colors"
-            >
-              <div className="font-medium text-primary">Add New Candidate</div>
-              <div className="text-sm text-muted-foreground mt-1">
-                Register a new candidate profile
-              </div>
-            </Link>
-            <Link
-              to="/admin/companies/new"
-              className="block p-4 bg-primary/5 hover:bg-primary/10 rounded-lg border border-primary/20 transition-colors"
-            >
-              <div className="font-medium text-primary">Add New Company</div>
-              <div className="text-sm text-muted-foreground mt-1">
-                Register a new company request
-              </div>
-            </Link>
-            <Link
-              to="/admin/employees/new"
-              className="block p-4 bg-primary/5 hover:bg-primary/10 rounded-lg border border-primary/20 transition-colors"
-            >
-              <div className="font-medium text-primary">Add New Employee</div>
-              <div className="text-sm text-muted-foreground mt-1">Create employee account</div>
-            </Link>
-          </div>
-        </motion.div>
-      </div>
+          </Link>
+          <Link
+            to="/admin/employees/new"
+            className="block p-4 bg-primary/5 hover:bg-primary/10 rounded-lg border border-primary/20 transition-colors"
+          >
+            <div className="font-medium text-primary">Add New Employee</div>
+            <div className="text-sm text-muted-foreground mt-1">Create employee account</div>
+          </Link>
+        </div>
+      </motion.div>
 
       {/* Recent Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
