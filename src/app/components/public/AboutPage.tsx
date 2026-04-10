@@ -93,18 +93,18 @@ export default function AboutPage() {
             </div>
 
             {companyInfo?.officeLocation ? (
-              <div className="bg-muted rounded-xl h-64 overflow-hidden">
-                <iframe
-                  src={companyInfo.officeLocation}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Office Location"
-                />
-              </div>
+              <a
+                href={companyInfo.officeLocation}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block bg-primary/10 hover:bg-primary/20 rounded-xl h-64 flex items-center justify-center transition-colors"
+              >
+                <div className="text-center">
+                  <MapPin className="w-12 h-12 text-primary mx-auto mb-4" />
+                  <p className="text-primary font-medium">View Office Location on Map</p>
+                  <p className="text-sm text-primary/70 mt-2">Opens in new tab</p>
+                </div>
+              </a>
             ) : (
               <div className="bg-muted rounded-xl h-64 flex items-center justify-center">
                 <p className="text-muted-foreground">Office Location Map</p>
