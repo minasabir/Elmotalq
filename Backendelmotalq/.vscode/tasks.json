@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Client: npm install",
+      "type": "npm",
+      "script": "install",
+      "path": "elmtalq.frontend.client",
+      "problemMatcher": []
+    },
+    {
+      "label": "Client: start",
+      "type": "npm",
+      "script": "start",
+      "path": "elmtalq.frontend.client",
+      "isBackground": true,
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Admin: npm install",
+      "type": "npm",
+      "script": "install",
+      "path": "elmtalq.frontendadmin.client",
+      "problemMatcher": []
+    },
+    {
+      "label": "Admin: start",
+      "type": "npm",
+      "script": "start",
+      "path": "elmtalq.frontendadmin.client",
+      "isBackground": true,
+      "problemMatcher": ["$tsc"]
+    }
+  ]
+}

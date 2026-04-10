@@ -1,0 +1,288 @@
+<div class="bg-white rounded-3xl card-shadow border border-gray-100 overflow-hidden animate-fade-up">
+  <!-- Header -->
+  <div class="p-8 border-b border-gray-50">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-6 lg:space-y-0">
+      <div>
+        <h1 class="text-3xl font-black text-primary-blue tracking-tight">Employees Management</h1>
+        <p class="text-gray-400 font-bold text-sm mt-1 uppercase tracking-widest">Team directory and access control</p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4">
+        <!-- Search -->
+        <div class="relative group">
+          <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" placeholder="Search members..."
+            class="w-full sm:w-72 bg-gray-50 border-none rounded-2xl py-3 pl-12 pr-4 text-sm focus:ring-2 focus:ring-primary-blue/5 transition-all outline-none italic text-gray-400" />
+          <svg
+            class="absolute left-4 top-3 w-5 h-5 text-gray-300 group-focus-within:text-primary-blue transition-colors"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+
+        <!-- Actions -->
+        <button (click)="showCreateForm = !showCreateForm"
+          class="inline-flex items-center justify-center gap-3 bg-primary-blue text-white px-6 py-3 rounded-2xl font-black text-sm hover:bg-primary-blue-light transition-all transform hover:-translate-y-1 shadow-lg shadow-primary-blue/20">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path>
+          </svg>
+          Add New Employee
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Employee Form -->
+  <div *ngIf="showCreateForm" class="p-10 border-b border-gray-50 bg-gray-50/30 animate-fade-up">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h2 class="text-2xl font-black text-primary-blue">Register New Member</h2>
+          <p class="text-gray-400 font-bold text-xs uppercase tracking-widest mt-1">Assign roles and set initial
+            credentials</p>
+        </div>
+        <button (click)="resetCreateForm()"
+          class="p-2 text-gray-300 hover:text-accent-red transition-all hover:bg-red-50 rounded-xl">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div *ngIf="errorMessage"
+        class="mb-8 bg-red-50 border border-red-100 text-accent-red px-6 py-4 rounded-2xl flex items-center gap-3 text-sm font-bold shadow-sm">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+            clip-rule="evenodd"></path>
+        </svg>
+        {{ errorMessage }}
+      </div>
+
+      <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="space-y-6">
+          <div>
+            <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">Full Name</label>
+            <input type="text" formControlName="name"
+              class="w-full bg-white px-5 py-4 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-primary-blue/5 focus:border-primary-blue outline-none transition-all font-bold placeholder:text-gray-300"
+              placeholder="e.g. Abdullah Ahmed" />
+          </div>
+          <div>
+            <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">Email
+              Address</label>
+            <input type="email" formControlName="email"
+              class="w-full bg-white px-5 py-4 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-primary-blue/5 focus:border-primary-blue outline-none transition-all font-bold placeholder:text-gray-300"
+              placeholder="name@elmtalq.com" />
+          </div>
+          <div>
+            <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">Phone
+              Number</label>
+            <input type="text" formControlName="phoneNumber"
+              class="w-full bg-white px-5 py-4 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-primary-blue/5 focus:border-primary-blue outline-none transition-all font-bold placeholder:text-gray-300"
+              placeholder="+966 55 XXX XXXX" />
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div>
+            <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">System Access
+              Level</label>
+            <select formControlName="role"
+              class="w-full bg-white px-5 py-4 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-primary-blue/5 focus:border-primary-blue outline-none transition-all font-bold appearance-none">
+              <option [value]="1">Secretary (Limited Access)</option>
+              <option [value]="2">Staff (Standard Access)</option>
+              <option [value]="0">Owner (Full System Access)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">Initial
+              Password</label>
+            <input type="password" formControlName="password"
+              class="w-full bg-white px-5 py-4 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-primary-blue/5 focus:border-primary-blue outline-none transition-all font-bold placeholder:text-gray-300"
+              placeholder="••••••••••••" />
+          </div>
+          <div>
+            <label class="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">Monthly Salary
+              (SAR)</label>
+            <div class="relative">
+              <input type="number" formControlName="salary"
+                class="w-full bg-white px-5 py-4 border border-gray-100 rounded-2xl focus:ring-4 focus:ring-primary-blue/5 focus:border-primary-blue outline-none transition-all font-bold placeholder:text-gray-300" />
+              <span class="absolute right-5 top-4 text-xs font-black text-gray-400">SAR</span>
+            </div>
+          </div>
+        </div>
+        <div class="md:col-span-2 flex justify-end gap-4 mt-6">
+          <button type="button" (click)="resetCreateForm()"
+            class="px-8 py-4 text-gray-400 font-bold hover:text-primary-blue hover:bg-gray-100 rounded-2xl transition-all">Discard</button>
+          <button type="submit" [disabled]="employeeForm.invalid || isSaving"
+            class="px-10 py-4 bg-primary-blue text-white rounded-2xl font-black text-sm hover:bg-primary-blue-light shadow-xl shadow-primary-blue/20 disabled:opacity-30 disabled:translate-y-0 transition-all transform hover:-translate-y-1 flex items-center gap-3">
+            <svg *ngIf="isSaving" class="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+              </path>
+            </svg>
+            {{ isSaving ? 'Registering...' : 'Register Employee' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="overflow-x-auto">
+    <table class="w-full text-right" dir="rtl">
+      <thead class="bg-gray-50/50 border-b border-gray-100">
+        <tr>
+          <th class="px-8 py-5 text-right w-12">
+            <input type="checkbox"
+              [checked]="employees.length > 0 && selectedEmployees.length === filteredEmployees.length"
+              (change)="selectAllEmployees()"
+              class="rounded-md border-gray-200 text-primary-blue focus:ring-primary-blue/20 w-5 h-5" />
+          </th>
+          <th class="px-8 py-5 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            الموظف
+          </th>
+          <th class="px-8 py-5 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            الصلاحية
+          </th>
+          <th class="px-8 py-5 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            رقم الهاتف
+          </th>
+          <th class="px-8 py-5 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            الحالة
+          </th>
+          <th class="px-8 py-5 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            تاريخ الانضمام
+          </th>
+          <th class="px-8 py-5 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            الإجراءات
+          </th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-50">
+        <!-- Loading State -->
+        <tr *ngIf="isLoading">
+          <td colspan="7" class="px-8 py-20 text-center text-right" dir="rtl">
+            <div class="flex flex-col items-center justify-center space-y-4">
+              <div
+                class="w-12 h-12 bg-primary-blue/5 rounded-2xl flex items-center justify-center border border-primary-blue/10">
+                <svg class="animate-spin h-6 w-6 text-primary-blue" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                  </path>
+                </svg>
+              </div>
+              <span class="text-gray-400 font-bold text-sm tracking-widest uppercase">جاري تحميل البيانات...</span>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Empty State -->
+        <tr *ngIf="!isLoading && filteredEmployees.length === 0">
+          <td colspan="7" class="px-8 py-24 text-center">
+            <div class="flex flex-col items-center">
+              <div class="w-20 h-20 bg-gray-50 rounded-3xl flex items-center justify-center mb-6">
+                <svg class="h-10 w-10 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+              </div>
+              <p class="text-xl font-black text-primary-blue mb-2">لا يوجد موظفين</p>
+              <p class="text-gray-400 font-bold text-sm">ابدأ بإضافة أعضاء لفريق عملك</p>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Employee Rows -->
+        <tr *ngFor="let employee of filteredEmployees" class="hover:bg-gray-50/50 transition-all group">
+          <td class="px-8 py-5">
+            <input type="checkbox" [checked]="selectedEmployees.includes(employee.id)"
+              (change)="toggleEmployeeSelection(employee.id)"
+              class="rounded-md border-gray-200 text-primary-blue focus:ring-primary-blue/20 w-5 h-5" />
+          </td>
+          <td class="px-8 py-5">
+            <div class="flex items-center gap-4 text-right" dir="rtl">
+              <div
+                class="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-100 group-hover:bg-primary-blue group-hover:border-primary-blue shadow-sm group-hover:shadow-lg group-hover:shadow-primary-blue/20 transition-all duration-500">
+                <span class="text-primary-blue group-hover:text-white font-black text-lg">{{
+                  employee.name.charAt(0).toUpperCase()
+                  }}</span>
+              </div>
+              <div>
+                <div class="text-sm font-black text-primary-blue group-hover:text-primary-blue-dark transition-colors">
+                  {{ employee.name }}</div>
+                <div class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">{{ employee.email }}
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="px-8 py-5">
+            <span [ngClass]="getRoleBadgeColor(employee.role)"
+              class="px-4 py-1.5 inline-flex text-[10px] font-black rounded-xl uppercase tracking-widest ring-1 ring-inset shadow-sm transition-all group-hover:scale-105">
+              {{ employee.role }}
+            </span>
+          </td>
+          <td class="px-8 py-5 text-sm font-bold text-gray-500 font-mono tracking-tighter">
+            {{ employee.phoneNumber }}
+          </td>
+          <td class="px-8 py-5">
+            <button (click)="toggleEmployeeStatus(employee)"
+              [ngClass]="employee.isActive ? 'bg-success-50 text-success-700 ring-success-100 hover:bg-success-100' : 'bg-red-50 text-accent-red ring-red-100 hover:bg-red-100'"
+              class="px-4 py-1.5 inline-flex text-[10px] font-black rounded-xl ring-1 ring-inset shadow-sm transition-all group-hover:scale-105">
+              {{ employee.isActive ? 'نشط' : 'غير نشط' }}
+            </button>
+          </td>
+          <td class="px-8 py-5 text-[10px] font-black text-gray-400 uppercase tracking-widest">
+            {{ formatDate(employee.createdAt) }}
+          </td>
+          <td class="px-8 py-5">
+            <div class="flex items-center gap-3">
+              <button [routerLink]="['/employees', employee.id]"
+                class="p-2 bg-gray-50 text-primary-blue hover:bg-primary-blue hover:text-white rounded-xl transition-all shadow-sm hover:shadow-lg hover:shadow-primary-blue/20 group/btn">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                  </path>
+                </svg>
+              </button>
+              <button [routerLink]="['/employees', employee.id, 'edit']"
+                class="p-2 bg-gray-50 text-gray-400 hover:bg-accent-red hover:text-white rounded-xl transition-all shadow-sm hover:shadow-lg hover:shadow-accent-red/20 group/btn">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z">
+                  </path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="px-8 py-6 bg-gray-50/50 border-t border-gray-100 flex items-center justify-between">
+    <div class="text-xs font-black text-gray-400 uppercase tracking-widest">
+      Showing <span class="text-primary-blue">{{ filteredEmployees.length }}</span> of
+      <span class="text-primary-blue">{{ employees.length }}</span> team members
+    </div>
+    <div class="flex gap-3">
+      <button
+        class="px-5 py-2.5 bg-white border border-gray-100 rounded-xl text-xs font-black text-gray-400 uppercase tracking-widest hover:bg-primary-blue hover:text-white hover:border-primary-blue shadow-sm transition-all disabled:opacity-30 disabled:pointer-events-none"
+        disabled>
+        Previous
+      </button>
+      <button
+        class="px-5 py-2.5 bg-white border border-gray-100 rounded-xl text-xs font-black text-primary-blue uppercase tracking-widest hover:bg-primary-blue hover:text-white hover:border-primary-blue shadow-sm transition-all disabled:opacity-30 disabled:pointer-events-none"
+        disabled>
+        Next
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,160 @@
+<div class="min-h-screen bg-gray-50 py-24 px-4 md:px-6 relative overflow-hidden">
+    <!-- Decorative background elements -->
+    <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-blue/5 rounded-full blur-[140px] -mr-80 -mt-80">
+    </div>
+
+    <div class="container mx-auto max-w-6xl relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-24 animate-fade-up">
+            <h1 class="text-5xl md:text-6xl font-black text-primary-blue mb-8">تواصل مع النخبة</h1>
+            <p class="text-gray-400 text-xl max-w-2xl mx-auto leading-relaxed">
+                نحن هنا للإجابة على جميع استفساراتكم. سواء كنت مرشحاً طموحاً أو مؤسسة تبحث عن التميز، نحن في انتظار
+                اتصالك.
+            </p>
+        </div>
+
+        @if (isLoading) {
+        <div class="flex flex-col items-center justify-center py-20">
+            <div class="w-16 h-16 border-4 border-primary-blue/20 border-t-primary-blue rounded-full animate-spin">
+            </div>
+            <p class="mt-6 text-primary-blue font-black text-xs uppercase tracking-widest">Initializing Connections...
+            </p>
+        </div>
+        } @else {
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 animate-fade-up" style="animation-delay: 0.1s">
+
+            <!-- Contact Info Grid -->
+            <div class="lg:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <!-- Address -->
+                <div
+                    class="bg-white p-10 rounded-[50px] shadow-xl border border-gray-100 flex flex-col items-center text-center group hover:border-primary-blue transition-colors">
+                    <div
+                        class="w-16 h-16 bg-primary-blue/5 text-primary-blue rounded-2xl flex items-center justify-center mb-8 group-hover:bg-primary-blue group-hover:text-white transition-all duration-300">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-black text-primary-blue mb-4">الفيسبوك</h3>
+                    <p class="text-gray-500 leading-relaxed"><a [href]="contactData?.facebook" target="_blank"
+                            class="hover:underline">تابعنا على فيسبوك</a></p>
+                </div>
+
+                <!-- Phone -->
+                <div
+                    class="bg-white p-10 rounded-[50px] shadow-xl border border-gray-100 flex flex-col items-center text-center group hover:border-accent-red transition-colors">
+                    <div
+                        class="w-16 h-16 bg-accent-red/5 text-accent-red rounded-2xl flex items-center justify-center mb-8 group-hover:bg-accent-red group-hover:text-white transition-all duration-300">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-black text-primary-blue mb-4">أرقام التواصل</h3>
+                    <p class="text-gray-500 leading-relaxed font-bold tracking-wider" dir="ltr">{{ contactData?.phone }}
+                    </p>
+                </div>
+
+                <!-- Email -->
+                <div
+                    class="bg-white p-10 rounded-[50px] shadow-xl border border-gray-100 flex flex-col items-center text-center group hover:border-primary-blue transition-colors">
+                    <div
+                        class="w-16 h-16 bg-primary-blue/5 text-primary-blue rounded-2xl flex items-center justify-center mb-8 group-hover:bg-primary-blue group-hover:text-white transition-all duration-300">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-black text-primary-blue mb-4">البريد الإلكتروني</h3>
+                    <p class="text-gray-500 leading-relaxed">{{ contactData?.email }}</p>
+                </div>
+            </div>
+
+            <!-- Detailed Section Split -->
+            <div class="lg:col-span-7">
+                <div class="bg-white rounded-[60px] p-12 shadow-2xl border border-gray-100 h-full">
+                    <h3 class="text-3xl font-black text-primary-blue mb-8">ساعات العمل الرسمية</h3>
+                    <div class="space-y-8">
+                        <div class="flex items-center gap-6 p-6 bg-gray-50 rounded-3xl">
+                            <div
+                                class="w-12 h-12 bg-primary-blue text-white rounded-2xl flex items-center justify-center">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-1">Weekly
+                                    Schedule</p>
+                                <p class="text-xl font-black text-primary-blue">من الأحد إلى الخميس، من 9 صباحاً حتى 5
+                                    مساءً</p>
+                            </div>
+                        </div>
+
+                        <div class="prose prose-lg text-gray-500 leading-loose">
+                            <p>نحرص في شركة المتألق على تقديم أفضل خدمة عملاء. فريقنا جاهز لاستقبالكم في مقر الشركة خلال
+                                ساعات العمل الرسمية، أو يمكنكم التواصل معنا عبر الهاتف في أي وقت للحالات العاجلة.</p>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div
+                                class="flex-1 h-32 bg-gray-50 rounded-3xl border border-gray-200 border-dashed animate-pulse">
+                            </div>
+                            <div
+                                class="flex-1 h-32 bg-gray-50 rounded-3xl border border-gray-200 border-dashed animate-pulse">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5">
+                <div
+                    class="bg-primary-blue rounded-[60px] p-12 text-white h-full relative overflow-hidden flex flex-col justify-between">
+                    <div
+                        class="absolute bottom-0 right-0 w-64 h-64 bg-accent-red opacity-20 rounded-full blur-[100px] -mr-32 -mb-32">
+                    </div>
+
+                    <div class="relative z-10">
+                        <h3 class="text-4xl font-black mb-10 leading-tight">جاهزون لبدء الرحلة؟</h3>
+                        <p class="text-white/70 text-lg leading-relaxed mb-12">
+                            انضم إلى آلاف المحترفين والشركات الذين وضعوا ثقتهم في "المتألق" كشريك استراتيجي في النجاح
+                            المهني.
+                        </p>
+
+                        <div class="space-y-6 mb-12">
+                            <div class="flex items-center gap-4">
+                                <div class="w-2 h-2 bg-accent-red rounded-full"></div>
+                                <span class="font-bold text-sm">سرعة في الاستجابة</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-2 h-2 bg-accent-red rounded-full"></div>
+                                <span class="font-bold text-sm">دقة في الاختيار</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-2 h-2 bg-accent-red rounded-full"></div>
+                                <span class="font-bold text-sm">دعم قانوني كامل</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button
+                        class="relative z-10 w-full bg-white text-primary-blue font-black text-xl py-6 rounded-3xl hover:bg-accent-red hover:text-white transition-all duration-300 shadow-xl group">
+                        طلب استشارة مجانية
+                        <svg class="inline-block w-6 h-6 mr-4 group-hover:translate-x-[-8px] transition-transform"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>

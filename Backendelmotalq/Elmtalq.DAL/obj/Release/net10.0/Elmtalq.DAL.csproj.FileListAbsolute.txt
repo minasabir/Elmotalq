@@ -1,0 +1,17 @@
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\bin\Release\net10.0\spa.proxy.json
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\bin\Release\net10.0\Elmtalq.DAL.deps.json
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\bin\Release\net10.0\Elmtalq.DAL.runtimeconfig.json
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\bin\Release\net10.0\Elmtalq.DAL.dll
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\bin\Release\net10.0\Elmtalq.DAL.pdb
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\obj\Release\net10.0\Elmtalq.DAL.csproj.AssemblyReference.cache
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\obj\Release\net10.0\spa.proxy.json
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\obj\Release\net10.0\Elmtalq.DAL.GeneratedMSBuildEditorConfig.editorconfig
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\obj\Release\net10.0\Elmtalq.DAL.AssemblyInfoInputs.cache
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\obj\Release\net10.0\Elmtalq.DAL.AssemblyInfo.cs
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\obj\Release\net10.0\Elmtalq.DAL.csproj.CoreCompileInputs.cache
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\obj\Release\net10.0\Elmtalq.DAL.sourcelink.json
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\obj\Release\net10.0\Elmtalq.DAL.dll
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\obj\Release\net10.0\refint\Elmtalq.DAL.dll
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\obj\Release\net10.0\Elmtalq.DAL.pdb
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\obj\Release\net10.0\Elmtalq.DAL.genruntimeconfig.cache
+M:\Elmtalq\Elmtalq\Elmtalq.DAL\obj\Release\net10.0\ref\Elmtalq.DAL.dll

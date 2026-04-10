@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملتق للتوظيف</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading" class="loading-screen">
+        <div class="spinner"></div>
+        <p>جاري التحميل...</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>الملتق</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">الرئيسية</a></li>
+                <li><a href="#about" class="nav-link">من نحن</a></li>
+                <li><a href="#candidates" class="nav-link">الباحثين عن عمل</a></li>
+                <li><a href="#companies" class="nav-link">الشركات</a></li>
+                <li><a href="#contact" class="nav-link">اتصل بنا</a></li>
+                <li><a href="#admin" class="nav-link" id="adminLink">تسجيل الدخول</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="mainContent">
+        <!-- Home Section -->
+        <section id="home" class="section">
+            <div class="container">
+                <div class="hero">
+                    <h1>مرحباً بك في الملتق للتوظيف</h1>
+                    <p>نحن نربط بين المواهب والفرص الوظيفية في المملكة العربية السعودية</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="showCandidateForm()">باحث عن عمل</button>
+                        <button class="btn btn-secondary" onclick="showCompanyForm()">شركة</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2>من نحن</h2>
+                <div id="aboutContent">
+                    <p>جاري التحميل...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2>اتصل بنا</h2>
+                <div id="contactContent">
+                    <p>جاري التحميل...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Section -->
+        <section id="admin" class="section">
+            <div class="container">
+                <h2>لوحة التحكم</h2>
+                <div id="adminContent">
+                    <!-- Login Form -->
+                    <div id="loginForm" class="form-container">
+                        <h3>تسجيل الدخول</h3>
+                        <form id="adminLoginForm">
+                            <div class="form-group">
+                                <label for="email">البريد الإلكتروني</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">كلمة المرور</label>
+                                <input type="password" id="password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">دخول</button>
+                        </form>
+                        <div id="loginError" class="error-message" style="display: none;"></div>
+                    </div>
+
+                    <!-- Admin Dashboard (hidden by default) -->
+                    <div id="adminDashboard" class="admin-dashboard" style="display: none;">
+                        <div class="dashboard-header">
+                            <h3>لوحة التحكم</h3>
+                            <button class="btn btn-secondary" onclick="logout()">تسجيل الخروج</button>
+                        </div>
+                        
+                        <div class="dashboard-tabs">
+                            <button class="tab-btn active" onclick="showTab('candidates')">الباحثين عن عمل</button>
+                            <button class="tab-btn" onclick="showTab('companies')">الشركات</button>
+                            <button class="tab-btn" onclick="showTab('employees')">الموظفين</button>
+                        </div>
+
+                        <!-- Candidates Tab -->
+                        <div id="candidatesTab" class="tab-content active">
+                            <h4>الباحثين عن عمل</h4>
+                            <div id="candidatesList">
+                                <p>جاري التحميل...</p>
+                            </div>
+                        </div>
+
+                        <!-- Companies Tab -->
+                        <div id="companiesTab" class="tab-content">
+                            <h4>الشركات</h4>
+                            <div id="companiesList">
+                                <p>جاري التحميل...</p>
+                            </div>
+                        </div>
+
+                        <!-- Employees Tab -->
+                        <div id="employeesTab" class="tab-content">
+                            <h4>الموظفين</h4>
+                            <div id="employeesList">
+                                <p>جاري التحميل...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="candidateModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('candidateModal')">&times;</span>
+            <h3>تقديم كباحث عن عمل</h3>
+            <form id="candidateForm">
+                <div class="form-group">
+                    <label for="candidateName">الاسم الكامل</label>
+                    <input type="text" id="candidateName" required>
+                </div>
+                <div class="form-group">
+                    <label for="candidatePhone">رقم الهاتف</label>
+                    <input type="tel" id="candidatePhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="candidateJob">المسمى الوظيفي</label>
+                    <input type="text" id="candidateJob" required>
+                </div>
+                <div class="form-group">
+                    <label for="candidateGender">الجنس</label>
+                    <select id="candidateGender" required>
+                        <option value="">اختر</option>
+                        <option value="0">ذكر</option>
+                        <option value="1">أنثى</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">تقديم</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="companyModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('companyModal')">&times;</span>
+            <h3>تقديم كشركة</h3>
+            <form id="companyForm">
+                <div class="form-group">
+                    <label for="companyName">اسم الشركة</label>
+                    <input type="text" id="companyName" required>
+                </div>
+                <div class="form-group">
+                    <label for="companyPhone">رقم الهاتف</label>
+                    <input type="tel" id="companyPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="companyEmail">البريد الإلكتروني</label>
+                    <input type="email" id="companyEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="companyCountry">البلد</label>
+                    <input type="text" id="companyCountry" required>
+                </div>
+                <div class="form-group">
+                    <label for="companyCity">المدينة</label>
+                    <input type="text" id="companyCity" required>
+                </div>
+                <div class="form-group">
+                    <label for="companyJobTitle">الوظيفة المطلوبة</label>
+                    <input type="text" id="companyJobTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="companyIndustry">مجال الشركة</label>
+                    <input type="text" id="companyIndustry" required>
+                </div>
+                <button type="submit" class="btn btn-primary">تقديم</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="messageContainer" class="message-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

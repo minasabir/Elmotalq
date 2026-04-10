@@ -1,0 +1,530 @@
+[
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "PatchAbout",
+    "RelativePath": "api/AdminElmtalq/About",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Elmtalq.BLL.DTOS.Admin.AboutPatchDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "Login",
+    "RelativePath": "api/AdminElmtalq/Auth/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Elmtalq.BLL.DTOS.Admin.LoginRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "GetAllCandidates",
+    "RelativePath": "api/AdminElmtalq/Candidates",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "GetCandidateById",
+    "RelativePath": "api/AdminElmtalq/Candidates/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "UpdateCandidate",
+    "RelativePath": "api/AdminElmtalq/Candidates/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Elmtalq.BLL.DTOS.Admin.CandidateUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "PatchCandidate",
+    "RelativePath": "api/AdminElmtalq/Candidates/{id}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Elmtalq.BLL.DTOS.Admin.CandidatePatchDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "DeleteCandidate",
+    "RelativePath": "api/AdminElmtalq/Candidates/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "AssignCandidateToEmployee",
+    "RelativePath": "api/AdminElmtalq/Candidates/{id}/Assign/{secretaryId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "secretaryId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "GetUnassignedCandidates",
+    "RelativePath": "api/AdminElmtalq/Candidates/Unassigned",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "GetAllCompanies",
+    "RelativePath": "api/AdminElmtalq/Companies",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "GetCompanyById",
+    "RelativePath": "api/AdminElmtalq/Companies/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "UpdateCompany",
+    "RelativePath": "api/AdminElmtalq/Companies/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Elmtalq.BLL.DTOS.Admin.CompanyUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "PatchCompany",
+    "RelativePath": "api/AdminElmtalq/Companies/{id}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Elmtalq.BLL.DTOS.Admin.CompanyPatchDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "DeleteCompany",
+    "RelativePath": "api/AdminElmtalq/Companies/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "AssignCompanyToEmployee",
+    "RelativePath": "api/AdminElmtalq/Companies/{id}/Assign/{secretaryId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "secretaryId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "GetUnassignedCompanies",
+    "RelativePath": "api/AdminElmtalq/Companies/Unassigned",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "PatchContact",
+    "RelativePath": "api/AdminElmtalq/Contact",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Elmtalq.BLL.DTOS.Admin.AboutPatchDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "CreateEmployee",
+    "RelativePath": "api/AdminElmtalq/Employees",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Elmtalq.BLL.DTOS.Admin.EmployeeCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "GetAllEmployees",
+    "RelativePath": "api/AdminElmtalq/Employees",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "PatchEmployee",
+    "RelativePath": "api/AdminElmtalq/Employees/{id}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "Elmtalq.BLL.DTOS.Admin.EmployeePatchDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "HealthCheck",
+    "RelativePath": "api/AdminElmtalq/Health",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.AdminElmtalqController",
+    "Method": "Search",
+    "RelativePath": "api/AdminElmtalq/Search",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "CandidateName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "JobTitle",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "YearsOfExperience",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "EducationalQualification",
+        "Type": "System.Nullable\u00601[[Elmtalq.DAL.Enums.EducationalQualification, Elmtalq.DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Country",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "GraduationYear",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "AssignedEmployeeId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "CompanyName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "RequiredJobTitle",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Country",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "AssignedEmployeeId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.ElmtalqController",
+    "Method": "GetAbout",
+    "RelativePath": "api/Elmtalq/About",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.ElmtalqController",
+    "Method": "CreateCandidate",
+    "RelativePath": "api/Elmtalq/Candidates",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "FullName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PhoneNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "JobTitle",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Gender",
+        "Type": "Elmtalq.DAL.Enums.Gender",
+        "IsRequired": false
+      },
+      {
+        "Name": "EducationalQualification",
+        "Type": "System.Nullable\u00601[[Elmtalq.DAL.Enums.EducationalQualification, Elmtalq.DAL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "YearsOfExperience",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "GraduationYear",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Country",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Governorate",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "CVFile",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "PersonalPhotoFile",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "IntroductionVideoFile",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.ElmtalqController",
+    "Method": "CreateCompany",
+    "RelativePath": "api/Elmtalq/Companies",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Elmtalq.BLL.DTOS.Public.CompanyCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.ElmtalqController",
+    "Method": "GetContact",
+    "RelativePath": "api/Elmtalq/Contact",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.ElmtalqController",
+    "Method": "HealthCheck",
+    "RelativePath": "api/Elmtalq/Health",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Elmtalq.API.Controllers.ElmtalqController",
+    "Method": "TestEndpoint",
+    "RelativePath": "api/Elmtalq/Test",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

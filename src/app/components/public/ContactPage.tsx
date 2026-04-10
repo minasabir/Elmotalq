@@ -32,49 +32,49 @@ export default function ContactPage() {
     {
       icon: Mail,
       label: 'Email',
-      value: companyInfo?.contactEmail || 'info@elmotalq.com',
-      href: `mailto:${companyInfo?.contactEmail || 'info@elmotalq.com'}`,
+      value: companyInfo?.contactEmail,
+      href: companyInfo?.contactEmail ? `mailto:${companyInfo.contactEmail}` : undefined,
     },
     {
       icon: Phone,
       label: 'Phone',
-      value: companyInfo?.contactPhone || '+20 112 233 4455',
-      href: `tel:${(companyInfo?.contactPhone || '+201122334455').replace(/\s/g, '')}`,
+      value: companyInfo?.contactPhone,
+      href: companyInfo?.contactPhone ? `tel:${companyInfo.contactPhone.replace(/\s/g, '')}` : undefined,
     },
     {
       icon: MessageCircle,
       label: 'WhatsApp',
-      value: companyInfo?.whatsapp || '+20 112 233 4455',
-      href: `https://wa.me/${(companyInfo?.whatsapp || '+201122334455').replace(/\D/g, '')}`,
+      value: companyInfo?.whatsapp,
+      href: companyInfo?.whatsapp ? `https://wa.me/${companyInfo.whatsapp.replace(/\D/g, '')}` : undefined,
     },
     {
       icon: MapPin,
       label: 'Address',
-      value: companyInfo?.officeLocation ? 'View on Map' : 'Cairo, Egypt',
-      href: companyInfo?.officeLocation || '#',
+      value: companyInfo?.officeLocation ? 'View on Map' : undefined,
+      href: companyInfo?.officeLocation,
     },
-  ];
+  ].filter(method => method.value !== undefined && method.href !== undefined);
 
   const socialLinks = [
     {
       icon: Facebook,
       label: 'Facebook',
-      href: companyInfo?.facebook || 'https://facebook.com/elmotalq',
+      href: companyInfo?.facebook,
       color: 'bg-[#1877F2]',
     },
     {
       icon: Instagram,
       label: 'Instagram',
-      href: companyInfo?.instagram || 'https://instagram.com/elmotalq',
+      href: companyInfo?.instagram,
       color: 'bg-[#E4405F]',
     },
     {
       icon: Linkedin,
       label: 'LinkedIn',
-      href: companyInfo?.linkedIn || 'https://linkedin.com/company/elmotalq',
+      href: companyInfo?.linkedIn,
       color: 'bg-[#0A66C2]',
     },
-  ];
+  ].filter(social => social.href !== undefined);
 
   return (
     <div className="min-h-[80vh]">
@@ -175,24 +175,26 @@ export default function ContactPage() {
         </motion.div>
 
         {/* Office Hours */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          className="mt-12 bg-secondary/50 rounded-xl p-8 border border-border"
-        >
-          <h3 className="text-xl font-bold mb-4 text-center">Office Hours</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-            <div className="text-center">
-              <p className="font-medium mb-1">Sunday - Thursday</p>
-              <p className="text-muted-foreground">9:00 AM - 5:00 PM</p>
+        {companyInfo && (
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            className="mt-12 bg-secondary/50 rounded-xl p-8 border border-border"
+          >
+            <h3 className="text-xl font-bold mb-4 text-center">Office Hours</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+              <div className="text-center">
+                <p className="font-medium mb-1">Sunday - Thursday</p>
+                <p className="text-muted-foreground">9:00 AM - 5:00 PM</p>
+              </div>
+              <div className="text-center">
+                <p className="font-medium mb-1">Friday - Saturday</p>
+                <p className="text-muted-foreground">Closed</p>
+              </div>
             </div>
-            <div className="text-center">
-              <p className="font-medium mb-1">Friday - Saturday</p>
-              <p className="text-muted-foreground">Closed</p>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        )}
           </>
         )}
       </section>

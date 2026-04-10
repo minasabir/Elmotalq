@@ -39,81 +39,19 @@ export default function AboutPage() {
             className="max-w-3xl"
           >
             <h1 className="text-5xl font-bold mb-6">About Elmotalq</h1>
-            <p className="text-xl text-primary-foreground/90">
-              {companyInfo?.companyDescription || 'We are a leading recruitment platform connecting exceptional talent with outstanding opportunities across the region.'}
-            </p>
+            {companyInfo?.companyDescription ? (
+              <p className="text-xl text-primary-foreground/90">
+                {companyInfo.companyDescription}
+              </p>
+            ) : (
+              <p className="text-xl text-primary-foreground/70">Loading company information...</p>
+            )}
           </motion.div>
         </div>
       </section>
 
       {/* Main Content */}
       <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
-          <motion.div
-            initial={{ x: -20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl font-bold mb-6">Our Story</h2>
-            <div className="space-y-4 text-muted-foreground">
-              <p>
-                Founded with a vision to transform the recruitment industry, Elmotalq has grown to become a trusted partner for companies and candidates alike.
-              </p>
-              <p>
-                We understand that finding the right job or the perfect candidate is more than just matching skills on paper. It's about finding the right fit—culturally, professionally, and personally.
-              </p>
-              <p>
-                Our team of experienced recruitment specialists works tirelessly to ensure every match we make creates lasting value for both candidates and employers.
-              </p>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ x: 20, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true }}
-            className="bg-card rounded-2xl p-8 border border-border"
-          >
-            <h3 className="text-2xl font-bold mb-6">Our Values</h3>
-            <div className="space-y-6">
-              <div className="flex gap-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Target className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h4 className="font-medium mb-1">Excellence</h4>
-                  <p className="text-sm text-muted-foreground">
-                    We strive for excellence in every placement
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Users className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h4 className="font-medium mb-1">People First</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Our candidates and clients are at the heart of everything we do
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Award className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h4 className="font-medium mb-1">Integrity</h4>
-                  <p className="text-sm text-muted-foreground">
-                    We operate with transparency and honesty
-                  </p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
 
         {/* Loading & Error States */}
         {loading && (

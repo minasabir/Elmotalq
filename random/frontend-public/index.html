@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملتق للتوظيف | ربط المواهب بالفرص</title>
+    <meta name="description" content="الملتق للتوظيف - وكالة توظيف رائدة في المملكة العربية السعودية">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading" class="loading-screen">
+        <div class="spinner"></div>
+        <p>جاري التحميل...</p>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-content">
+                    <div class="logo">
+                        <i class="fas fa-handshake"></i>
+                        <span>الملتق</span>
+                    </div>
+                    <ul class="nav-menu">
+                        <li><a href="#home" class="nav-link active">الرئيسية</a></li>
+                        <li><a href="#about" class="nav-link">من نحن</a></li>
+                        <li><a href="#services" class="nav-link">خدماتنا</a></li>
+                        <li><a href="#candidates" class="nav-link">الباحثين عن عمل</a></li>
+                        <li><a href="#companies" class="nav-link">للشركات</a></li>
+                        <li><a href="#contact" class="nav-link">اتصل بنا</a></li>
+                    </ul>
+                    <div class="nav-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1>نربط بين <span class="highlight">المواهب</span> و<span class="highlight">الفرص</span></h1>
+                        <p class="hero-subtitle">وكالة توظيف رائدة متخصصة في ربط أفضل المواهب مع أبرز الشركات في المملكة العربية السعودية</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="showCandidateModal()">
+                                <i class="fas fa-user-tie"></i>
+                                باحث عن عمل
+                            </button>
+                            <button class="btn btn-secondary" onclick="showCompanyModal()">
+                                <i class="fas fa-building"></i>
+                                شركة
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <div class="hero-card">
+                            <i class="fas fa-briefcase"></i>
+                            <h3>ابحث عن وظيفتك</h3>
+                            <p>انضم إلى آلاف الباحثين عن عمل الذين وجدوا فرصتهم من خلالنا</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <div class="section-header">
+                    <h2>من نحن</h2>
+                    <p>نحن نؤمن بأن التوظيف الصحيح يبني مستقبل أفضل للجميع</p>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <div id="aboutInfo" class="about-info">
+                            <div class="loading-placeholder">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <p>جاري تحميل المعلومات...</p>
+                            </div>
+                        </div>
+                        <div class="about-stats">
+                            <div class="stat-item">
+                                <h3 class="stat-number">500+</h3>
+                                <p>باحث عن عمل</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3 class="stat-number">100+</h3>
+                                <p>شركة شريكة</p>
+                            </div>
+                            <div class="stat-item">
+                                <h3 class="stat-number">95%</h3>
+                                <p>نسبة الرضا</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2>خدماتنا</h2>
+                    <p>نقدم حلولاً توظيفية متكاملة تلبي احتياجات السوق</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>توظيف المواهب</h3>
+                        <p>نبحث ونختار أفضل المواهب التي تناسب متطلبات شركائنا</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>الاستشارات الوظيفية</h3>
+                        <p>نقدم استشارات مهنية تساعد الباحثين عن عمل في اتخاذ القرارات الصحيحة</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3>التدريب والتطوير</h3>
+                        <p>برامج تدريبية متخصصة لتطوير المهارات وزيادة فرص التوظيف</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>تقييم المرشحين</h3>
+                        <p>نقوم بتقييم شامل للمرشحين لضمان اختيار الأنسب للوظيفة</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="section-header">
+                    <h2>اتصل بنا</h2>
+                    <p>نحن هنا لمساعدتك في رحلتك المهنية</p>
+                </div>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div id="contactDetails" class="contact-details">
+                            <div class="loading-placeholder">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <p>جاري تحميل معلومات الاتصال...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <h3>أرسل لنا رسالة</h3>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="contactName">الاسم الكامل</label>
+                                <input type="text" id="contactName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail">البريد الإلكتروني</label>
+                                <input type="email" id="contactEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactMessage">الرسالة</label>
+                                <textarea id="contactMessage" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i>
+                                إرسال الرسالة
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-handshake"></i>
+                        <span>الملتق</span>
+                    </div>
+                    <p>وكالة توظيف رائدة متخصصة في ربط المواهب بالفرص الوظيفية في المملكة العربية السعودية</p>
+                </div>
+                <div class="footer-section">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="#home">الرئيسية</a></li>
+                        <li><a href="#about">من نحن</a></li>
+                        <li><a href="#services">خدماتنا</a></li>
+                        <li><a href="#contact">اتصل بنا</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>تواصل معنا</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 الملتق للتوظيف. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Candidate Modal -->
+    <div id="candidateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>تقديم كباحث عن عمل</h3>
+                <span class="close" onclick="closeModal('candidateModal')">&times;</span>
+            </div>
+            <form id="candidateForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="candidateName">الاسم الكامل *</label>
+                        <input type="text" id="candidateName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="candidatePhone">رقم الهاتف *</label>
+                        <input type="tel" id="candidatePhone" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="candidateEmail">البريد الإلكتروني</label>
+                        <input type="email" id="candidateEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="candidateJob">المسمى الوظيفي *</label>
+                        <input type="text" id="candidateJob" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="candidateGender">الجنس *</label>
+                        <select id="candidateGender" required>
+                            <option value="">اختر</option>
+                            <option value="0">ذكر</option>
+                            <option value="1">أنثى</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="candidateExperience">سنوات الخبرة</label>
+                        <input type="number" id="candidateExperience" min="0">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="candidateEducation">المؤهل التعليمي</label>
+                        <select id="candidateEducation">
+                            <option value="">اختر</option>
+                            <option value="0">ثانوي</option>
+                            <option value="1">دبلوم</option>
+                            <option value="2">بكالوريوس</option>
+                            <option value="3">ماجستير</option>
+                            <option value="4">دكتوراه</option>
+                            <option value="5">أخرى</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="candidateGraduation">سنة التخرج</label>
+                        <input type="number" id="candidateGraduation" min="1990" max="2024">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="candidateCountry">البلد *</label>
+                        <input type="text" id="candidateCountry" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="candidateCity">المدينة</label>
+                        <input type="text" id="candidateCity">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="candidateCV">رفع السيرة الذاتية (PDF)</label>
+                    <input type="file" id="candidateCV" accept=".pdf">
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i>
+                    تقديم الطلب
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Company Modal -->
+    <div id="companyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>تقديم كشركة</h3>
+                <span class="close" onclick="closeModal('companyModal')">&times;</span>
+            </div>
+            <form id="companyForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="companyName">اسم الشركة *</label>
+                        <input type="text" id="companyName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="companyPhone">رقم الهاتف *</label>
+                        <input type="tel" id="companyPhone" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="companyEmail">البريد الإلكتروني *</label>
+                        <input type="email" id="companyEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="companyWebsite">الموقع الإلكتروني</label>
+                        <input type="url" id="companyWebsite">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="companyCountry">البلد *</label>
+                        <input type="text" id="companyCountry" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="companyCity">المدينة *</label>
+                        <input type="text" id="companyCity" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="companyJobTitle">الوظيفة المطلوبة *</label>
+                        <input type="text" id="companyJobTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="companyIndustry">مجال الشركة *</label>
+                        <input type="text" id="companyIndustry" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="companySize">حجم الشركة</label>
+                    <select id="companySize">
+                        <option value="">اختر</option>
+                        <option value="1-10">1-10 موظفين</option>
+                        <option value="11-50">11-50 موظفين</option>
+                        <option value="51-200">51-200 موظفين</option>
+                        <option value="201-500">201-500 موظفين</option>
+                        <option value="500+">أكثر من 500 موظفين</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i>
+                    تقديم الطلب
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Message Container -->
+    <div id="messageContainer" class="message-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
