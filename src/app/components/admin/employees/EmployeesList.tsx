@@ -57,14 +57,14 @@ export default function EmployeesList() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold">Employees</h2>
-          <p className="text-muted-foreground">Manage employee accounts and permissions</p>
+          <h2 className="text-xl sm:text-2xl font-bold">Employees</h2>
+          <p className="text-sm sm:text-base text-muted-foreground">Manage employee accounts and permissions</p>
         </div>
         <Link
           to="/admin/employees/new"
-          className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
         >
           <Plus className="w-4 h-4" />
           Add Employee
@@ -72,24 +72,24 @@ export default function EmployeesList() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="bg-card rounded-xl p-6 border border-border"
+          className="bg-card rounded-xl p-4 sm:p-6 border border-border"
         >
           <div className="text-sm text-muted-foreground mb-1">Total Employees</div>
-          <div className="text-3xl font-bold">{employees.length}</div>
+          <div className="text-2xl sm:text-3xl font-bold">{employees.length}</div>
         </motion.div>
 
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="bg-card rounded-xl p-6 border border-border"
+          className="bg-card rounded-xl p-4 sm:p-6 border border-border"
         >
           <div className="text-sm text-muted-foreground mb-1">Active Employees</div>
-          <div className="text-3xl font-bold text-primary">
+          <div className="text-2xl sm:text-3xl font-bold text-primary">
             {employees.filter((e) => e.isActive).length}
           </div>
         </motion.div>
@@ -98,10 +98,10 @@ export default function EmployeesList() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="bg-card rounded-xl p-6 border border-border"
+          className="bg-card rounded-xl p-4 sm:p-6 border border-border"
         >
           <div className="text-sm text-muted-foreground mb-1">Inactive Employees</div>
-          <div className="text-3xl font-bold text-muted-foreground">
+          <div className="text-2xl sm:text-3xl font-bold text-muted-foreground">
             {employees.filter((e) => !e.isActive).length}
           </div>
         </motion.div>
@@ -178,7 +178,7 @@ export default function EmployeesList() {
       </div>
 
       {/* Info Box */}
-      <div className="bg-secondary/50 rounded-xl p-6 border border-border">
+      <div className="bg-secondary/50 rounded-xl p-4 sm:p-6 border border-border">
         <h3 className="font-medium mb-2">Employee Roles</h3>
         <ul className="space-y-2 text-sm text-muted-foreground">
           <li className="flex items-start gap-2">
