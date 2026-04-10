@@ -77,7 +77,7 @@ export default function AdminLogin() {
                   value={formData.email}
                   onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
                   className={`w-full ${isRTL ? 'pr-12 pl-4' : 'pl-12 pr-4'} py-3 bg-input-background border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring ${isRTL ? 'text-right' : 'text-left'}`}
-                  placeholder="owner@elmtalq.com"
+                  placeholder="enter your email"
                 />
               </div>
             </div>
